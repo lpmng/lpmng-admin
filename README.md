@@ -1,0 +1,2 @@
+# lpmng-admin
+administration page

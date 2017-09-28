@@ -1,0 +1,303 @@
+body,html
+{
+    margin: 0;
+    padding: 0;
+    font-family: "DejaVu Serif"
+}
+
+#app
+{
+    display:flex;
+    flex-direction: row;
+    width: 100vw;
+    min-height: 100vh;
+    align-items: stretch;
+}
+
+/*****************************************/
+/*      Menu                            */
+/****************************************/
+
+#vertical-menu
+{
+    flex-shrink: 0;
+    min-width: 120px;
+    background-color: rgb(80,80,80);
+    text-align: center;
+    border-right: 1px solid rgb(140,140,140);
+    box-shadow: 2px 2px 2px rgba(0,0,0,0.5);
+    z-index: 10;
+}
+
+#vertical-menu > a
+{
+    color:white;
+    text-decoration: none;
+    display: block;
+    padding: 20px 10px;
+}
+
+#vertical-menu > .router-link-active
+{
+    background-color: royalblue;    
+}
+#vertical-menu > a > img
+{
+    width: 60px;
+}
+
+
+/***************************************/
+
+h1
+{
+    text-align: center;
+    font-size: 2em;
+    
+}
+
+h1
+{
+    font-weight: normal;
+}
+
+
+
+
+main
+{
+    flex:1;
+    flex-shrink: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+}
+
+#submenu
+{
+    min-width: 240px;
+    background-color: rgb(50,50,50);
+    padding: 20px;
+    box-shadow: 2px 0px 5px rgba(100,100,100,1);
+    z-index: 5;
+}
+
+#submenu h2
+{
+    color:#C746C4;
+    border-bottom: 1px solid #C746C4;
+}
+
+#submenu > .router-link-active
+{
+    background-color: black;
+    box-shadow: 1px 1px 2px black;
+} 
+
+#submenu > a
+{
+    display: block;
+    color:white;
+    text-decoration: none;
+    padding: 10px;
+    font-family: arial;
+    font-weight: 800;
+}
+
+#content 
+{
+    flex:1;
+    flex-shrink: 1;
+    padding: 10px;
+    
+}
+
+#content h2
+{
+    font-weight: normal;
+    font-size: 1.5em;
+    color:#8A1387;
+    margin-bottom: 2px;
+    text-align: left;   
+}
+
+
+.partie
+{
+    padding: 10px 10px;
+    border-bottom: 1px solid lightgray;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.center
+{
+    text-align: center;
+}
+
+/*************************/
+/*    search menu        */
+/************************/
+
+#searchmenu
+{
+    background-color: black;
+    padding: 20px;
+    min-width: 240px;
+    flex: 0;
+    color:white;
+}
+
+
+#searchmenu input[type="search"]
+{
+    width: 100%;
+    height: 30px;
+    border: none;
+    border-radius: 20px;;
+    box-shadow: 2px 2px 3px rgba(200,200,200,0.8) inset;
+    margin-bottom: 10px;
+}
+
+#searchmenu > a
+{
+    color:white;
+    display: block;
+    text-decoration: none;
+    padding: 10px;
+}
+
+#searchmenu > .router-link-active
+{
+    background-color: #134C8A;
+    box-shadow: 1px 1px 2px black;
+} 
+
+/*********************************/
+/*      Form                    */
+/********************************/
+
+form .partie
+{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    min-height: 180px;
+}
+
+.partie.no-line
+{
+    border: none;
+}
+
+form .partie .title
+{
+    width: 250px;
+    color: rgb(170,170,170);
+}
+
+form .partie .form
+{
+    flex:1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    align-self: stretch;
+    align-items: center;
+}
+
+div.input
+{
+    display: inline-block;
+}
+label
+{
+    font-size: 1.1em;
+    font-weight: 800;
+}
+/* input radio */
+input[type=radio]
+{
+    display: none;
+}
+
+input[type=radio] + label .radio
+{
+    height: 40px;
+    width: 40px;
+    border: 1px solid lightgray;
+    border-radius: 20px;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 10px;
+    box-shadow: 2px 2px 3px rgba(200,200,200,0.8) inset;
+}
+
+input[type=radio]:checked + label .radio .in
+{
+    height: 24px;
+    width: 24px;
+    background-color: black;
+    border-radius: 15px;
+    margin: auto;
+    margin-top: 8px;
+    box-shadow: 2px 2px 3px rgba(200,200,200,0.8);
+}
+
+
+
+input[type=text],input[type=password]
+{
+    height: 40px;
+    width: 220px;
+    background-color: rgb(250,250,250);
+    border: none;
+    box-shadow: 1px 1px 3px rgba(200,200,200,0.5) inset;
+    border-radius: 4px;
+    border: 1px solid linen;
+}
+
+input[type=button]
+{
+    height: 40px;
+    width: 220px;
+    border: none;
+    box-shadow: 2px 2px 3px rgba(200,200,200,0.5);
+    background-image:linear-gradient(60deg, grey, black);
+    border: 1px solid lightgrey;
+    border-radius: 6px;
+    color: white;
+    margin: 10px 10px;
+}
+
+label.vertical
+{
+    min-width: 250px;
+    display: inline-block;
+}
+
+/********** information **************/
+
+
+
+.partie .info
+{
+    width: 45%;
+    display: inline-block;
+    padding: 5px 10px;
+    text-align: left;
+}
+
+.partie .info h3
+{
+    display: inline-block;
+    padding-right: 10px;
+    margin: 0;
+    text-align: center;
+}
+
+
+
+

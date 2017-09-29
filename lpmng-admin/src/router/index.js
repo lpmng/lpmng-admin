@@ -6,7 +6,7 @@ import About from '@/components/About'
 import UserIndex from '@/components/user/UserIndex'
 import UserDetail from '@/components/user/UserDetail'
 import UserCreate from '@/components/user/UserCreate'
-import UserDetailUniq from '@/components/user/UserDetailUniq'
+// import UserDetailUniq from '@/components/user/UserDetailUniq'
 
 Vue.use(Router)
 
@@ -17,11 +17,11 @@ export default new Router({
       name: 'About',
       component: About
     },
-    {
+    /* {
       path: '/user/detail/:pseudo',
       component: UserDetailUniq,
       name: 'UserDetailUniq'
-    },
+    }, */
     {
       path: '/user/detail',
       name: 'UserDetail',

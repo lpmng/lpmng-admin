@@ -1,16 +1,13 @@
 <template>
-  <main class=""> 
-    <sub-menu-vertical></sub-menu-vertical>
-    <search-menu-vertical></search-menu-vertical>
     <section id="content">
-        <h1>{{this.$route.params.pseudo}}</h1>
+        <h1>{{this.pseudo}}</h1>
         <div class="description">
           <div class="partie center">
               <h2>Informations</h2>
-              <div class="info"><h3>Nom:</h3>toto</div>
-              <div class="info"><h3>Prenom:</h3>tititutu</div>
-              <div class="info"><h3>Cotisant:</h3>oui</div>
-              <div class="info"><h3>Nombre session:</h3>2</div>
+              <div class="info"><h3>Nom:</h3>{{nom}}</div>
+              <div class="info"><h3>Prenom:</h3>{{prenom}}</div>
+              <div class="info"><h3>Cotisant:</h3>{{cotisant}}</div>
+              <div class="info"><h3>Nombre session:</h3>{{nombreSessions}}</div>
               <input type="button" value="Supprimer"/>
           </div>
           <div class="partie">
@@ -32,14 +29,14 @@
               <input type="button" value="Modifier"/>
               <br/>
               
-              <input type="radio" name="cotisant" value="false" id="cotisant" checked> 
+              <input type="radio" name="cotisant" value="false" id="cotisant" class="round-radio" checked> 
               <label for="cotisant">
                   <div class="radio">
                       <div class="in"></div>
                   </div>
                   Non cotisant
               </label>
-              <input type="radio" name="cotisant" value="true" id="nonCotisant"> 
+              <input type="radio" name="cotisant" value="true" id="nonCotisant" class="round-radio"> 
               <label for="nonCotisant">
                   <div class="radio">
                   
@@ -55,7 +52,6 @@
           </div>
         </div>
     </section>
-  </main>
 </template>
 
 <script>
@@ -63,19 +59,11 @@ import UserMenu from '@/components/user/UserMenu'
 import UserSearchMenu from '@/components/user/UserSearchMenu'
 export default {
   name: 'UserDetailUniq',
+  props: ['pseudo', 'nom', 'prenom', 'cotisant', 'nombreSessions'],
   data () {
     return {
-      pseudo: '(vide)'
+
     }
-  },
-  created () {
-    // récupérer les données lorsque la vue est créée et
-    // que les données sont déjà observées
-    this.fetchData()
-  },
-  watch: {
-    // appeler encore la méthode si la route change
-    '$route': 'fetchData'
   },
   components:
   {

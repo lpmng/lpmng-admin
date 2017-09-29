@@ -9,14 +9,14 @@
                     Status
                 </div>
                 <div class="form">
-                    <input type="radio" name="cotisant" value="false" id="cotisant" checked> 
+                    <input type="radio" name="cotisant" value="false" id="cotisant" class="round-radio" v-model="form.cotisant" checked > 
                     <label for="cotisant">
                         <div class="radio">
                             <div class="in"></div>
                         </div>
                         Non cotisant
                     </label>
-                    <input type="radio" name="cotisant" value="true" id="nonCotisant"> 
+                    <input type="radio" name="cotisant" value="true" id="nonCotisant" class="round-radio" v-model="form.cotisant"> 
                     <label for="nonCotisant">
                         <div class="radio">
                        
@@ -58,7 +58,7 @@
             </div>
             <div class="partie no-line">
                 <div class="form">
-                    <input type="button" value="Creer" @click="createPseudo">
+                    <input type="button" value="Creer" @click="createUser">
                 </div>
             </div>
         </form>
@@ -75,16 +75,21 @@ export default {
       form: {
         password: '',
         nom: '',
-        prenom: ''
+        prenom: '',
+        cotisant: 'false',
+        pseudo: ''
       }
     }
   },
   methods: {
-    createPseudo () {}
-  },
-  createPseudo () {
-    var pseudoTmp = this.form.nom + this.form.prenom
-    this.form.pseudo = pseudoTmp.substring(0, 10)
+    createUser () {
+      console.log('---- yop ----')
+      console.log('pass:' + this.form.password)
+      console.log('nom:' + this.form.nom)
+      console.log('pren:' + this.form.prenom)
+      console.log('co:' + this.form.cotisant)
+      console.log('pseudo:' + this.form.pseudo)
+    }
   },
   components:
   {
@@ -98,10 +103,15 @@ export default {
   },
   computed: {
     // a computed getter
-    pseudo: function () {
-      // `this` points to the vm instance
-      var pseudoTmp = this.form.nom + this.form.prenom
-      return pseudoTmp.substring(0, 10)
+    pseudo: {
+      get: function () {
+        var pseudoTmp = this.form.nom + this.form.prenom
+        this.form.pseudo = pseudoTmp
+        return pseudoTmp.substring(0, 10)
+      },
+      set: function (newValue) {
+        this.form.pseudo = newValue
+      }
     }
   }
 }

@@ -80,28 +80,32 @@ main
     padding: 20px;
     box-shadow: 2px 0px 5px rgba(100,100,100,1);
     z-index: 5;
+    padding-top: 70px;
 }
 
 #submenu h2
 {
     color:#C746C4;
     border-bottom: 1px solid #C746C4;
+    display: none;
 }
 
 #submenu > .router-link-active
 {
     background-color: black;
-    box-shadow: 1px 1px 2px black;
+    border-radius: 5px;
+    color:white;
 } 
 
 #submenu > a
 {
     display: block;
-    color:white;
+    color:grey;
     text-decoration: none;
     padding: 10px;
     font-family: arial;
     font-weight: 800;
+    padding-left: 20px;
 }
 
 #content 
@@ -142,8 +146,7 @@ main
 #searchmenu
 {
     background-color: black;
-    padding: 20px;
-    min-width: 240px;
+    min-width: 260px;
     flex: 0;
     color:white;
 }
@@ -151,15 +154,15 @@ main
 
 #searchmenu input[type="search"]
 {
-    width: 100%;
+    width: calc(100% - 40px);
     height: 30px;
     border: none;
     border-radius: 20px;;
     box-shadow: 2px 2px 3px rgba(200,200,200,0.8) inset;
-    margin-bottom: 10px;
+    margin: 20px;
 }
 
-#searchmenu > a
+input[type=radio].search-result + label
 {
     color:white;
     display: block;
@@ -167,10 +170,10 @@ main
     padding: 10px;
 }
 
-#searchmenu > .router-link-active
+input[type=radio].search-result:checked + label
 {
     background-color: #134C8A;
-    box-shadow: 1px 1px 2px black;
+    
 } 
 
 /*********************************/
@@ -218,12 +221,12 @@ label
     font-weight: 800;
 }
 /* input radio */
-input[type=radio]
+input[type=radio].round-radio, input[type=radio].search-result
 {
     display: none;
 }
 
-input[type=radio] + label .radio
+input[type=radio].round-radio + label .radio
 {
     height: 40px;
     width: 40px;
@@ -235,7 +238,7 @@ input[type=radio] + label .radio
     box-shadow: 2px 2px 3px rgba(200,200,200,0.8) inset;
 }
 
-input[type=radio]:checked + label .radio .in
+input[type=radio].round-radio:checked + label .radio .in
 {
     height: 24px;
     width: 24px;
@@ -265,7 +268,7 @@ input[type=button]
     width: 220px;
     border: none;
     box-shadow: 2px 2px 3px rgba(200,200,200,0.5);
-    background-image:linear-gradient(60deg, grey, black);
+    background-image:linear-gradient(60deg, grey, #302f2f);
     border: 1px solid lightgrey;
     border-radius: 6px;
     color: white;

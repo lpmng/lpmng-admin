@@ -146,6 +146,8 @@ main
     text-align: center;
     padding: 10px;
     border:1px solid grey;
+    max-width: 80%;
+    margin-top: 10px;
     
 }
 
@@ -159,6 +161,18 @@ main
     background-color: rgba(255,0,0,0.3);
 }
 
+small
+{
+    font-weight: normal;
+}
+
+.separateur
+{
+    border-top: 1px solid grey;
+    width: 50%;
+    margin: 10px auto 0px auto;
+
+}
 
 
 /*************************/
@@ -182,6 +196,7 @@ main
     border-radius: 20px;;
     box-shadow: 2px 2px 3px rgba(200,200,200,0.8) inset;
     margin: 20px;
+    padding-left: 10px;
 }
 
 input[type=radio].search-result + label
@@ -189,7 +204,7 @@ input[type=radio].search-result + label
     color:white;
     display: block;
     text-decoration: none;
-    padding: 10px;
+    padding: 10px 10px 0px 10px;
 }
 
 input[type=radio].search-result:checked + label

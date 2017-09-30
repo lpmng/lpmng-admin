@@ -24,22 +24,14 @@
 import UserMenu from '@/components/user/UserMenu'
 import UserSearchMenu from '@/components/user/UserSearchMenu'
 import UserDetailUniq from '@/components/user/UserDetailUniq'
+import axios from 'axios'
 export default {
   name: 'UserDetail',
   data () {
     return {
       search: '',
       pseudoSelected: '',
-      listUsers: {
-        maisonneuv: {pseudo: 'maisonneuv', name: 'maisonneuve', firstname: 'elio', cotisant: 'true', nombreSessions: '5'},
-        darbouxtom: {pseudo: 'darbouxtom', name: 'darboux', firstname: 'tom', cotisant: 'true', nombreSessions: '3'},
-        bouriettev: {pseudo: 'bouriettev', name: 'bouriette', firstname: 'vincent', cotisant: 'true', nombreSessions: '0'},
-        berthaudmu: {pseudo: 'berthaudmu', name: 'berthaud-muller', firstname: 'gaël', cotisant: 'true', nombreSessions: '5'},
-        buissonxav: {pseudo: 'buissonxav', name: 'buisson', firstname: 'xavier', cotisant: 'true', nombreSessions: '1'},
-        frerenicol: {pseudo: 'frerenicol', name: 'frere', firstname: 'nicolas', cotisant: 'true', nombreSessions: '0'},
-        dubusernes: {pseudo: 'dubusernes', name: 'dubus', firstname: 'ernest', cotisant: 'false', nombreSessions: '0'},
-        schallanne: {pseudo: 'schallanne', name: 'schall', firstname: 'anne-gaëlle', cotisant: 'false', nombreSessions: '0'}
-      }
+      listUsers: {}
     }
   },
   watch:
@@ -66,6 +58,15 @@ export default {
         return pseudosTmp
       }
     }
+  },
+  mounted: function () {
+    axios.get('http://127.0.0.1:8000/users/', {})
+    .then(function (response) {
+      console.log(response)
+    })
+    .catch(function (error) {
+      console.log(error)
+    })
   },
   components:
   {

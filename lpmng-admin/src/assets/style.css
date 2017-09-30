@@ -139,6 +139,28 @@ main
     text-align: center;
 }
 
+.infos
+{
+    width: 400px;
+    margin: auto;
+    text-align: center;
+    padding: 10px;
+    border:1px solid grey;
+    
+}
+
+.positif
+{
+    background-color: rgba(0,255,0,0.3);
+}
+
+.negatif
+{
+    background-color: rgba(255,0,0,0.3);
+}
+
+
+
 /*************************/
 /*    search menu        */
 /************************/
@@ -251,7 +273,7 @@ input[type=radio].round-radio:checked + label .radio .in
 
 
 
-input[type=text],input[type=password]
+input[type=text],input[type=password],input[type=tel],input[type=mail]
 {
     height: 40px;
     width: 220px;
@@ -262,7 +284,7 @@ input[type=text],input[type=password]
     border: 1px solid linen;
 }
 
-input[type=button]
+input[type=button],a.button
 {
     height: 40px;
     width: 220px;
@@ -273,6 +295,15 @@ input[type=button]
     border-radius: 6px;
     color: white;
     margin: 10px 10px;
+    text-decoration: none;
+    text-align: center;
+}
+
+a.button
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 label.vertical

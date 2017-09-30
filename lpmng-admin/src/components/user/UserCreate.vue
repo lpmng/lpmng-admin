@@ -3,6 +3,8 @@
     <sub-menu-vertical></sub-menu-vertical>
     <section id="content">
         <h1>Create a user</h1>
+        <div class="infos positif" v-if="msgReussite">{{msgReussite}}</div>
+        <div class="infos negatif" v-if="msgError">{{msgError}}</div>
         <form>
             <div class="partie">
                 <div class="title">
@@ -56,9 +58,24 @@
                     </div>
                 </div>
             </div>
+            <div class="partie">
+                <div class="title">
+                    contact informations
+                </div>
+                <div class="form">
+                    <div class="input">
+                    <label for="mail">Mail:</label>
+                    <input type="mail" name="pseudo" id="mail" v-model="form.mail"/>
+                    </div>
+                    <div class="input">
+                    <label for="telephone">Téléphone:</label>
+                    <input type="tel" name="telephone" id="telephone" v-model="form.phone"/>
+                    </div>
+                </div>
+            </div>
             <div class="partie no-line">
                 <div class="form">
-                    <input type="button" value="Creer" @click="createUser">
+                    <a class="button" @click="createUser">Creer</a>
                 </div>
             </div>
         </form>
@@ -68,6 +85,7 @@
 
 <script>
 import UserMenu from '@/components/user/UserMenu'
+import axios from 'axios'
 export default {
   name: 'UserCreate',
   data () {
@@ -77,18 +95,52 @@ export default {
         nom: '',
         prenom: '',
         cotisant: 'false',
-        pseudo: ''
-      }
+        pseudo: '',
+        mail: '',
+        telephone: 'none'
+      },
+      msgReussite: '',
+      msgError: ''
     }
   },
   methods: {
     createUser () {
+      scroll(0, 0)
       console.log('---- yop ----')
       console.log('pass:' + this.form.password)
       console.log('nom:' + this.form.nom)
       console.log('pren:' + this.form.prenom)
       console.log('co:' + this.form.cotisant)
       console.log('pseudo:' + this.form.pseudo)
+      console.log('mail:' + this.form.mail)
+      // verify informations
+      if (
+      this.form.password.length > 2 &&
+      this.form.nom.length > 2 &&
+      this.form.prenom.length > 2 &&
+      this.form.pseudo.length > 2 &&
+      this.form.mail.length > 2) {
+        // do request
+        axios.post('http://127.0.0.1:8000/users/', {
+          uid: this.form.pseudo,
+          commonname: this.form.prenom,
+          surname: this.form.nom,
+          mail: this.form.mail,
+          password: this.form.password
+        })
+        .then((response) => {
+          this.msgReussite = 'reussi'
+          this.msgError = ''
+        })
+        .catch((error) => {
+          console.log(error)
+          this.msgReussite = ''
+          this.msgError = 'Une erreur est survenu'
+        })
+      } else {
+        this.msgReussite = ''
+        this.msgError = 'Les champs sont incomplets'
+      }
     }
   },
   components:
@@ -107,10 +159,12 @@ export default {
       get: function () {
         var pseudoTmp = this.form.nom + this.form.prenom
         this.form.pseudo = pseudoTmp
+        this.form.mail = pseudoTmp.substring(0, 10) + '@eisti.eu'
         return pseudoTmp.substring(0, 10)
       },
       set: function (newValue) {
         this.form.pseudo = newValue
+        this.form.mail = newValue + '@eisti.eu'
       }
     }
   }

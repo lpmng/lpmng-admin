@@ -8,6 +8,8 @@
               <div class="info"><h3>Prenom:</h3>{{prenom}}</div>
               <div class="info"><h3>Cotisant:</h3>{{cotisant}}</div>
               <div class="info"><h3>Nombre session:</h3>{{nombreSessions}}</div>
+              <div class="info"><h3>Mail:</h3>{{mail}}</div>
+              <div class="info"><h3>Téléphone:</h3>{{tel}}</div>
               <input type="button" value="Supprimer"/>
           </div>
           <div class="partie">
@@ -26,6 +28,14 @@
               <br/>
               <label for="nombre_sesions" class="vertical">Nombre sessions:</label>
               <input type="text" name="nombre_sessions" id="nombre_sessions"/>
+              <input type="button" value="Modifier"/>
+              <br/>
+              <label for="mail" class="vertical">Mail:</label>
+              <input type="mail" name="mail" id="mail"/>
+              <input type="button" value="Modifier"/>
+              <br/>
+              <label for="tel" class="vertical">Téléphone:</label>
+              <input type="tel" name="tel" id="tel"/>
               <input type="button" value="Modifier"/>
               <br/>
               
@@ -59,7 +69,7 @@ import UserMenu from '@/components/user/UserMenu'
 import UserSearchMenu from '@/components/user/UserSearchMenu'
 export default {
   name: 'UserDetailUniq',
-  props: ['pseudo', 'nom', 'prenom', 'cotisant', 'nombreSessions'],
+  props: ['pseudo', 'nom', 'prenom', 'cotisant', 'nombreSessions', 'mail', 'tel'],
   data () {
     return {
 

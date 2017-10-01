@@ -16,7 +16,10 @@
         </div>
 
     </nav>
-    <infos-user v-if="pseudoSelected" v-bind:pseudo="pseudoSelected" v-bind:nom="listUsers[pseudoSelected].surname" v-bind:prenom="listUsers[pseudoSelected].commonname" v-bind:cotisant="listUsers[pseudoSelected].cotisant" v-bind:nombreSessions="listUsers[pseudoSelected].nombreSessions">
+    <infos-user v-if="pseudoSelected" v-bind:pseudo="pseudoSelected"                        v-bind:nom="listUsers[pseudoSelected].surname" 
+                                      v-bind:prenom="listUsers[pseudoSelected].commonname"  v-bind:cotisant="listUsers[pseudoSelected].cotisant" 
+                                      v-bind:nombreSessions="listUsers[pseudoSelected].nombreSessions"
+                                      v-bind:tel="listUsers[pseudoSelected].tel"            v-bind:mail="listUsers[pseudoSelected].mail">
 
     </infos-user>
 

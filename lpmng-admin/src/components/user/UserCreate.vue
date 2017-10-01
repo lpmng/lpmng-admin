@@ -69,7 +69,7 @@
                     </div>
                     <div class="input">
                     <label for="telephone">Téléphone:</label>
-                    <input type="tel" name="telephone" id="telephone" v-model="form.phone"/>
+                    <input type="tel" name="telephone" id="telephone" v-model="form.telephone"/>
                     </div>
                 </div>
             </div>
@@ -122,11 +122,12 @@ export default {
       this.form.mail.length > 2) {
         // do request
         axios.post('http://127.0.0.1:8000/users/', {
-          uid: this.form.pseudo,
+          uid: this.form.pseudo.toLowerCase(),
           commonname: this.form.prenom,
           surname: this.form.nom,
           mail: this.form.mail,
-          password: this.form.password
+          password: this.form.password,
+          tel: this.form.telephone
         })
         .then((response) => {
           this.msgReussite = 'reussi'
@@ -158,12 +159,12 @@ export default {
     pseudo: {
       get: function () {
         var pseudoTmp = this.form.nom + this.form.prenom
-        this.form.pseudo = pseudoTmp
-        this.form.mail = pseudoTmp.substring(0, 10) + '@eisti.eu'
-        return pseudoTmp.substring(0, 10)
+        this.form.pseudo = pseudoTmp.substring(0, 10).toLowerCase()
+        this.form.mail = pseudoTmp.substring(0, 10).toLowerCase() + '@eisti.eu'
+        return pseudoTmp.substring(0, 10).toLowerCase()
       },
       set: function (newValue) {
-        this.form.pseudo = newValue
+        this.form.pseudo = newValue.toLowerCase()
         this.form.mail = newValue + '@eisti.eu'
       }
     }

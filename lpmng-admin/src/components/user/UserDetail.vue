@@ -55,8 +55,6 @@ export default {
         console.log('-----search:' + this.search + '--------')
         if (this.search.length > 0) {
           for (var key in this.listUsers) {
-            console.log(this.listUsers[key].uid)
-            console.log(this.listUsers[key].uid.indexOf(this.search))
             if (this.listUsers[key].uid.indexOf(this.search) > -1 || this.listUsers[key].commonname.indexOf(this.search) > -1 || this.listUsers[key].surname.indexOf(this.search) > -1) {
               pseudosTmp.push(this.listUsers[key])
             }

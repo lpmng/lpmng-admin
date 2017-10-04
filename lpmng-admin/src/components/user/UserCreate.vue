@@ -50,7 +50,7 @@
                 <div class="form">
                     <div class="input">
                     <label for="pseudo">Pseudo:</label>
-                    <input type="text" name="pseudo" id="pseudo" v-model="pseudo"/>
+                    <input type="text" name="pseudo" id="pseudo" v-model="form.pseudo"/>
                     </div>
                     <div class="input">
                     <label for="password">Mot de passe:</label>
@@ -130,7 +130,7 @@ export default {
           tel: this.form.telephone
         })
         .then((response) => {
-          this.msgReussite = 'reussi'
+          this.msgReussite = 'réussi'
           this.msgError = ''
         })
         .catch((error) => {
@@ -151,23 +151,28 @@ export default {
   watch:
   {
     'form.nom': function (val) {
-
+      var pseudoTmp = val + this.form.prenom
+      this.form.pseudo = pseudoTmp.substring(0, 10).toLowerCase()
+      this.form.mail = pseudoTmp.substring(0, 10).toLowerCase() + '@eisti.eu'
+    },
+    'form.prenom': function (val) {
+      var pseudoTmp = this.form.nom + val
+      this.form.pseudo = pseudoTmp.substring(0, 10).toLowerCase()
+      this.form.mail = pseudoTmp.substring(0, 10).toLowerCase() + '@eisti.eu'
+    },
+    'form.pseudo': function (val) {
+      console.log('wololo')
+      this.form.mail = val + '@eisti.eu'
     }
   },
   computed: {
-    // a computed getter
-    pseudo: {
-      get: function () {
-        var pseudoTmp = this.form.nom + this.form.prenom
-        this.form.pseudo = pseudoTmp.substring(0, 10).toLowerCase()
-        this.form.mail = pseudoTmp.substring(0, 10).toLowerCase() + '@eisti.eu'
-        return pseudoTmp.substring(0, 10).toLowerCase()
-      },
+    /* pseudo: {
       set: function (newValue) {
+        this.pseudo = newValue.toLowerCase()
         this.form.pseudo = newValue.toLowerCase()
         this.form.mail = newValue + '@eisti.eu'
       }
-    }
+    } */
   }
 }
 </script>

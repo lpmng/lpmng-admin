@@ -12,7 +12,7 @@
               <div class="info"><h3>Nombre session:</h3>{{nombreSessions}}</div>
               <div class="info"><h3>Mail:</h3>{{mail}}</div>
               <div class="info"><h3>Téléphone:</h3>{{tel}}</div>
-              <input type="button" value="Supprimer"/>
+              <input type="button" value="Supprimer" @click="deleteUser"/>
           </div>
           <div class="partie">
               <h2>Modification</h2>
@@ -89,6 +89,18 @@ export default {
     }
   },
   methods: {
+    deleteUser () {
+      axios.delete(window.core_url + 'users/' + this.pseudo + '/')
+      .then((response) => {
+        this.msgReussite = this.pseudo + ' supprimmé'
+        this.msgError = ''
+      })
+      .catch((error) => {
+        console.log(error)
+        this.msgReussite = ''
+        this.msgError = this.pseudo + 'non supprimé'
+      })
+    },
     changeNom () {
       this.patchvalue({
         surname: this.form.nom

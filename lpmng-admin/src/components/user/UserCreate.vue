@@ -121,7 +121,7 @@ export default {
       this.form.pseudo.length > 2 &&
       this.form.mail.length > 2) {
         // do request
-        axios.post('http://127.0.0.1:8000/users/', {
+        axios.post(window.core_url + 'users/', {
           uid: this.form.pseudo.toLowerCase(),
           commonname: this.form.prenom,
           surname: this.form.nom,

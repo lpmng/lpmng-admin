@@ -53,20 +53,19 @@ export default {
       get: function () {
         var pseudosTmp = []
         console.log('-----search:' + this.search + '--------')
-        if (this.search.length > 0) {
-          for (var key in this.listUsers) {
-            if (this.listUsers[key].uid.indexOf(this.search) > -1 || this.listUsers[key].commonname.indexOf(this.search) > -1 || this.listUsers[key].surname.indexOf(this.search) > -1) {
-              pseudosTmp.push(this.listUsers[key])
-            }
+        for (var key in this.listUsers) {
+          if (this.listUsers[key].uid.indexOf(this.search) > -1 || this.listUsers[key].commonname.indexOf(this.search) > -1 || this.listUsers[key].surname.indexOf(this.search) > -1) {
+            pseudosTmp.push(this.listUsers[key])
           }
         }
+
         console.log(pseudosTmp)
         return pseudosTmp
       }
     }
   },
   mounted: function () {
-    axios.get('http://127.0.0.1:8000/users/', {})
+    axios.get(window.core_url + 'users/', {})
     .then((response) => {
       console.log(response)
 

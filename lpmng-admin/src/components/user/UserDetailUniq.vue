@@ -92,12 +92,12 @@ export default {
     changeNom () {
       this.patchvalue({
         surname: this.form.nom
-      }, this.form.nom, 'nom', this.nom, 'http://127.0.0.1:8000/users/' + this.pseudo + '/')
+      }, this.form.nom, 'nom', this.nom, window.core_url + 'users/' + this.pseudo + '/')
     },
     changePrenom () {
       this.patchvalue({
         commonname: this.form.prenom
-      }, this.form.prenom, 'nom', this.prenom, 'http://127.0.0.1:8000/users/' + this.pseudo + '/')
+      }, this.form.prenom, 'nom', this.prenom, window.core_url + 'users/' + this.pseudo + '/')
     },
     changeNombreSessions () {
       /* this.patchvalue({
@@ -107,12 +107,12 @@ export default {
     changeMail () {
       this.patchvalue({
         mail: this.form.mail
-      }, this.form.mail, 'nom', this.mail, 'http://127.0.0.1:8000/users/' + this.pseudo + '/')
+      }, this.form.mail, 'nom', this.mail, window.core_url + 'users/' + this.pseudo + '/')
     },
     changeTel () {
       this.patchvalue({
         tel: this.form.tel
-      }, this.form.tel, 'téléphone', this.tel, 'http://127.0.0.1:8000/users/' + this.pseudo + '/')
+      }, this.form.tel, 'téléphone', this.tel, window.core_url + 'users/' + this.pseudo + '/')
     },
     patchvalue (requestArgs, newValue, localFieldName, valueToUpdate, url) {
       axios.patch(url, requestArgs)

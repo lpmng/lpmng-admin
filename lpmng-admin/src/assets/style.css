@@ -137,6 +137,18 @@ main
     text-align: center;
 }
 
+.infos
+{
+    width: 400px;
+    margin: auto;
+    text-align: center;
+    padding: 10px;
+    border:1px solid grey;
+    max-width: 80%;
+    margin-top: 10px;
+    
+}
+
 .positif
 {
     background-color: rgba(0,255,0,0.3);

@@ -38,7 +38,8 @@ export default {
       search: '',
       pseudoSelected: '',
       listUsers: {},
-      msgError: ''
+      msgError: '',
+      pseudos: {}
     }
   },
   watch:
@@ -74,6 +75,7 @@ export default {
         this.listUsers[element.uid].cotisant = 'non'
         this.listUsers[element.uid].nombreSessions = '0'
       }, this)
+      this.pseudos = this.listUsers
     })
     .catch((error) => {
       console.log(error)

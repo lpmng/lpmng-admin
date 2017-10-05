@@ -13,12 +13,12 @@ export default {
         {
           id: 1,
           link: 'UserDetail',
-          text: 'All users'
+          text: 'Voir les utilisateurs'
         },
         {
           id: 2,
           link: 'UserCreate',
-          text: 'Create a user'
+          text: 'Ajouter un utilisateur'
         }
       ]
     }

@@ -2,15 +2,11 @@
     <nav id="vertical-menu">
         <router-link :to="{name: 'Hello'}">
             <img src="../../src/assets/home.svg"/>
-            <div>Home</div>
-        </router-link>
-        <router-link :to="{name: 'About'}">
-            <img src="../../src/assets/about.svg"/>
-            <div>About</div>
+            <div>Acceuil</div>
         </router-link>
         <router-link :to="{name: 'UserIndex'}">
             <img src="../../src/assets/user.svg"/>
-            <div>User</div>
+            <div>Utilisateurs</div>
         </router-link>
     </nav>
 </template>

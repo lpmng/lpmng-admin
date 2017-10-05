@@ -2,7 +2,7 @@
   <main class=""> 
     <sub-menu-vertical></sub-menu-vertical>
     <section id="content">
-        <h1>Creer un utilisateur</h1>
+        <h1>Ajouter un utilisateur</h1>
         <div class="infos positif" v-if="msgReussite">{{msgReussite}}</div>
         <div class="infos negatif" v-if="msgError">{{msgError}}</div>
         <form>

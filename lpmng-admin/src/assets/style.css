@@ -21,7 +21,7 @@ body,html
 #vertical-menu
 {
     flex-shrink: 0;
-    min-width: 120px;
+    min-width: 90px;
     background-color: rgb(80,80,80);
     text-align: center;
     border-right: 1px solid rgb(140,140,140);
@@ -43,7 +43,7 @@ body,html
 }
 #vertical-menu > a > img
 {
-    width: 60px;
+    width: 40px;
 }
 
 
@@ -129,7 +129,6 @@ main
 .partie
 {
     padding: 10px 10px;
-    border-bottom: 1px solid lightgray;
     max-width: 1000px;
     margin: auto;
 }
@@ -222,7 +221,7 @@ form .partie
     display: flex;
     flex-direction: row;
     align-items: center;
-    min-height: 180px;
+    min-height: 100px;
 }
 
 .partie.no-line

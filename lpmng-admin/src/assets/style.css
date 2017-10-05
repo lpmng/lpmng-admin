@@ -129,25 +129,12 @@ main
 .partie
 {
     padding: 10px 10px;
-    max-width: 1000px;
     margin: auto;
 }
 
 .center
 {
     text-align: center;
-}
-
-.infos
-{
-    width: 400px;
-    margin: auto;
-    text-align: center;
-    padding: 10px;
-    border:1px solid grey;
-    max-width: 80%;
-    margin-top: 10px;
-    
 }
 
 .positif
@@ -220,8 +207,6 @@ form .partie
 {
     display: flex;
     flex-direction: row;
-    align-items: center;
-    min-height: 100px;
 }
 
 .partie.no-line
@@ -235,26 +220,16 @@ form .partie .title
     color: rgb(170,170,170);
 }
 
-form .partie .form
+form .partie .input
 {
     flex:1;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    flex-wrap: wrap;
-    align-self: stretch;
-    align-items: center;
-}
-
-div.input
-{
-    display: inline-block;
 }
 label
 {
     font-size: 1.1em;
     font-weight: 800;
+    min-width: 200px;
+    display: inline-block;
 }
 /* input radio */
 input[type=radio].round-radio, input[type=radio].search-result

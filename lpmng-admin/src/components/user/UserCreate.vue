@@ -7,47 +7,35 @@
         <div class="infos negatif" v-if="msgError">{{msgError}}</div>
         <form>
             <div class="partie">
-                <div class="title">
-                    Status
-                </div>
-                <div class="form">
-                    <input type="radio" name="cotisant" value="false" id="cotisant" class="round-radio" v-model="form.cotisant" checked > 
-                    <label for="cotisant">
-                        <div class="radio">
-                            <div class="in"></div>
-                        </div>
-                        Non cotisant
-                    </label>
-                    <input type="radio" name="cotisant" value="true" id="nonCotisant" class="round-radio" v-model="form.cotisant"> 
-                    <label for="nonCotisant">
-                        <div class="radio">
-                       
-                            <div class="in"></div>
-                         </div>
-                        Cotisant
-                    </label>
-                </div>
+               
+                <input type="radio" name="cotisant" value="false" id="cotisant" class="round-radio" v-model="form.cotisant" checked > 
+                <label for="cotisant">
+                    <div class="radio">
+                        <div class="in"></div>
+                    </div>
+                    Non cotisant
+                </label>
+                <input type="radio" name="cotisant" value="true" id="nonCotisant" class="round-radio" v-model="form.cotisant"> 
+                <label for="nonCotisant">
+                    <div class="radio">
+                    
+                        <div class="in"></div>
+                      </div>
+                    Cotisant
+                </label>
+                
             </div>
             <div class="partie">
-                <div class="title">
-                    Informations personelles
+                <div class="input">
+                <label for="nom">Nom:</label>
+                <input type="text" name="nom" id="nom" v-model="form.nom"/>
                 </div>
-                <div class="form">
-                    <div class="input">
-                    <label for="nom">Nom:</label>
-                    <input type="text" name="nom" id="nom" v-model="form.nom"/>
-                    </div>
-                    <div class="input">
-                    <label for="prenom">Prénom:</label>
-                    <input type="text" name="prenom" id="prenom" v-model="form.prenom"/>
-                    </div>
-                </div>
+                <div class="input">
+                <label for="prenom">Prénom:</label>
+                <input type="text" name="prenom" id="prenom" v-model="form.prenom"/>
+                </div>                
             </div>
             <div class="partie">
-                <div class="title">
-                    Authentification
-                </div>
-                <div class="form">
                     <div class="input">
                     <label for="pseudo">Pseudo:</label>
                     <input type="text" name="pseudo" id="pseudo" v-model="form.pseudo"/>
@@ -56,13 +44,8 @@
                     <label for="password">Mot de passe:</label>
                     <input type="password" name="password" id="password" v-model="form.password"/>
                     </div>
-                </div>
             </div>
             <div class="partie">
-                <div class="title">
-                    contact informations
-                </div>
-                <div class="form">
                     <div class="input">
                     <label for="mail">Mail:</label>
                     <input type="mail" name="pseudo" id="mail" v-model="form.mail"/>
@@ -71,7 +54,6 @@
                     <label for="telephone">Téléphone:</label>
                     <input type="tel" name="telephone" id="telephone" v-model="form.telephone"/>
                     </div>
-                </div>
             </div>
             <div class="partie no-line">
                 <div class="form">
@@ -97,7 +79,7 @@ export default {
         cotisant: 'false',
         pseudo: '',
         mail: '',
-        telephone: 'none'
+        telephone: ''
       },
       msgReussite: '',
       msgError: ''
@@ -159,10 +141,6 @@ export default {
       var pseudoTmp = this.form.nom + val
       this.form.pseudo = pseudoTmp.substring(0, 10).toLowerCase()
       this.form.mail = pseudoTmp.substring(0, 10).toLowerCase() + '@eisti.eu'
-    },
-    'form.pseudo': function (val) {
-      console.log('wololo')
-      this.form.mail = val + '@eisti.eu'
     }
   },
   computed: {

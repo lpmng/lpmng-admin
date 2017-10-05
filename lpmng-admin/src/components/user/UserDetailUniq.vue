@@ -17,28 +17,40 @@
           <div class="partie">
               <h2>Modification</h2>
               <label for="nom" class="vertical">Nom:</label>
+              <div class="inline">
               <input type="text" name="nom" id="nom" v-model="form.nom"/>
               <input type="button" value="Modifier" @click="changeNom"/>
+              </div>
               <br/>
               <label for="prenom" class="vertical">Prenom:</label>
+              <div class="inline">
               <input type="text" name="prenom" id="prenom" v-model="form.prenom"/>
               <input type="button" value="Modifier" @click="changePrenom"/>
+              </div>
               <br/>
               <label for="password" class="vertical">Mot de passe:</label>
+              <div class="inline">
               <input type="text" name="password" id="password" v-model="form.password"/>
               <input type="button" value="Modifier"/>
+              </div>
               <br/>
               <label for="nombre_sesions" class="vertical">Nombre sessions:</label>
+              <div class="inline">
               <input type="text" name="nombre_sessions" id="nombre_sessions" v-model="form.nombreSessions"/>
               <input type="button" value="Modifier" @click="changeNombreSessions"/>
+              </div>
               <br/>
               <label for="mail" class="vertical">Mail:</label>
+              <div class="inline">
               <input type="mail" name="mail" id="mail" v-model="form.mail"/>
               <input type="button" value="Modifier" @click="changeMail"/>
+              </div>
               <br/>
               <label for="tel" class="vertical">Téléphone:</label>
+              <div class="inline">
               <input type="tel" name="tel" id="tel" v-model="form.tel"/>
               <input type="button" value="Modifier" @click="changeTel"/>
+              </div>
               <br/>
               
               <input type="radio" name="cotisant" value="false" id="cotisant" class="round-radio" checked> 
@@ -68,7 +80,6 @@
 
 <script>
 import UserMenu from '@/components/user/UserMenu'
-import UserSearchMenu from '@/components/user/UserSearchMenu'
 import axios from 'axios'
 export default {
   name: 'UserDetailUniq',
@@ -163,8 +174,7 @@ export default {
   },
   components:
   {
-    'sub-menu-vertical': UserMenu,
-    'search-menu-vertical': UserSearchMenu
+    'sub-menu-vertical': UserMenu
   }
 }
 </script>

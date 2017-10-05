@@ -46,6 +46,14 @@ body,html
     width: 40px;
 }
 
+.hamburger
+{
+    position: absolute;
+    top:10px;
+    left: 10px;
+    width: 40px;
+    z-index: 50;
+}
 
 /***************************************/
 
@@ -75,29 +83,39 @@ main
 
 #submenu
 {
-    min-width: 240px;
-    background-color: rgb(50,50,50);
-    padding: 20px;
+    position: relative;
     box-shadow: 2px 0px 5px rgba(100,100,100,1);
+    background-color: rgb(50,50,50);
     z-index: 5;
-    padding-top: 70px;
+    min-width: 60px;
 }
 
-#submenu h2
+#submenu-content
+{
+    min-width: 240px;
+    
+    padding: 20px;
+    
+    
+    padding-top: 70px;
+    position: relative;
+}
+
+#submenu-content h2
 {
     color:#C746C4;
     border-bottom: 1px solid #C746C4;
     display: none;
 }
 
-#submenu > .router-link-active
+#submenu-content > .router-link-active
 {
     background-color: black;
     border-radius: 5px;
     color:white;
 } 
 
-#submenu > a
+#submenu-content > a
 {
     display: block;
     color:grey;
@@ -128,7 +146,7 @@ main
 
 .partie
 {
-    padding: 10px 10px;
+    padding: 0px 10px;
     margin: auto;
 }
 
@@ -172,7 +190,10 @@ small
 
 }
 
-
+.inline
+{
+    display: inline-block;
+}
 /*************************/
 /*    search menu        */
 /************************/
@@ -180,9 +201,16 @@ small
 #searchmenu
 {
     background-color: black;
-    min-width: 260px;
-    flex: 0;
+    
     color:white;
+    position: relative;
+    min-width: 60px;
+}
+
+#searchmenu-content
+{   
+    margin-top: 50px; 
+    min-width: 260px;    
 }
 
 
@@ -219,6 +247,7 @@ form .partie
 {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .partie.no-line
@@ -235,6 +264,9 @@ form .partie .title
 form .partie .input
 {
     flex:1;
+    flex-shrink: 0;
+    min-width: 500px;
+    padding: 5px 0px;
 }
 label
 {

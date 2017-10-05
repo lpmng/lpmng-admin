@@ -6,25 +6,7 @@
         <div class="infos positif" v-if="msgReussite">{{msgReussite}}</div>
         <div class="infos negatif" v-if="msgError">{{msgError}}</div>
         <form>
-            <div class="partie">
-               
-                <input type="radio" name="cotisant" value="false" id="cotisant" class="round-radio" v-model="form.cotisant" checked > 
-                <label for="cotisant">
-                    <div class="radio">
-                        <div class="in"></div>
-                    </div>
-                    Non cotisant
-                </label>
-                <input type="radio" name="cotisant" value="true" id="nonCotisant" class="round-radio" v-model="form.cotisant"> 
-                <label for="nonCotisant">
-                    <div class="radio">
-                    
-                        <div class="in"></div>
-                      </div>
-                    Cotisant
-                </label>
-                
-            </div>
+
             <div class="partie">
                 <div class="input">
                 <label for="nom">Nom:</label>
@@ -54,6 +36,23 @@
                     <label for="telephone">Téléphone:</label>
                     <input type="tel" name="telephone" id="telephone" v-model="form.telephone"/>
                     </div>
+            </div>
+            <div class="partie">               
+                <input type="radio" name="cotisant" value="false" id="cotisant" class="round-radio" v-model="form.cotisant" checked > 
+                <label for="cotisant">
+                    <div class="radio">
+                        <div class="in"></div>
+                    </div>
+                    Non cotisant
+                </label>
+                <input type="radio" name="cotisant" value="true" id="nonCotisant" class="round-radio" v-model="form.cotisant"> 
+                <label for="nonCotisant">
+                    <div class="radio">
+                    
+                        <div class="in"></div>
+                      </div>
+                    Cotisant
+                </label>                
             </div>
             <div class="partie no-line">
                 <div class="form">

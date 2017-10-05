@@ -2,6 +2,8 @@
   <main class=""> 
     <sub-menu-vertical></sub-menu-vertical>
     <nav id="searchmenu">
+        <img src="../../../src/assets/menu.svg" class="hamburger" @click="displayMenu"/>
+        <div id="searchmenu-content" v-if="menuVisible">
         <div class="infos negatif" v-if="msgError">{{msgError}}</div>
         <input type="search" v-model="search">
         <!-- results search (use radio input to permit the utilisation of v-bind properties)-->
@@ -14,7 +16,7 @@
               <div class="separateur"></div>
           </label>        
         </div>
-
+        </div>
     </nav>
     <infos-user v-if="pseudoSelected" v-bind:pseudo="pseudoSelected"                        v-bind:nom="listUsers[pseudoSelected].surname" 
                                       v-bind:prenom="listUsers[pseudoSelected].commonname"  v-bind:cotisant="listUsers[pseudoSelected].cotisant" 
@@ -28,7 +30,6 @@
 
 <script>
 import UserMenu from '@/components/user/UserMenu'
-import UserSearchMenu from '@/components/user/UserSearchMenu'
 import UserDetailUniq from '@/components/user/UserDetailUniq'
 import axios from 'axios'
 export default {
@@ -39,7 +40,8 @@ export default {
       pseudoSelected: '',
       listUsers: {},
       msgError: '',
-      pseudos: {}
+      pseudos: {},
+      menuVisible: true
     }
   },
   watch:
@@ -65,6 +67,12 @@ export default {
       }
     }
   },
+  methods: {
+    displayMenu () {
+      console.log('wout')
+      this.menuVisible = !this.menuVisible
+    }
+  },
   mounted: function () {
     axios.get(window.core_url + 'users/', {})
     .then((response) => {
@@ -85,7 +93,6 @@ export default {
   components:
   {
     'sub-menu-vertical': UserMenu,
-    'search-menu-vertical': UserSearchMenu,
     'infos-user': UserDetailUniq
   }
 }

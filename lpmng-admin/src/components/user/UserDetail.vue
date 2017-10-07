@@ -46,25 +46,16 @@ export default {
   },
   watch:
   {
-    'pseudoSelected': function (val) {
-
-    }
-  },
-  computed: {
-    // a computed getter
-    pseudos: {
-      get: function () {
-        var pseudosTmp = []
-        console.log('-----search:' + this.search + '--------')
-        for (var key in this.listUsers) {
-          if (this.listUsers[key].uid.indexOf(this.search) > -1 || this.listUsers[key].commonname.indexOf(this.search) > -1 || this.listUsers[key].surname.indexOf(this.search) > -1) {
-            pseudosTmp.push(this.listUsers[key])
-          }
+    search: function (val) {
+      console.log('yo')
+      var pseudosTmp = []
+      console.log('-----search:' + this.search + '--------')
+      for (var key in this.listUsers) {
+        if (this.listUsers[key].uid.indexOf(val) > -1 || this.listUsers[key].commonname.indexOf(val) > -1 || this.listUsers[key].surname.indexOf(val) > -1) {
+          pseudosTmp.push(this.listUsers[key])
         }
-
-        console.log(pseudosTmp)
-        return pseudosTmp
       }
+      this.pseudos = pseudosTmp
     }
   },
   methods: {

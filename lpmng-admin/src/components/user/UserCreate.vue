@@ -38,24 +38,27 @@
                     </div>
             </div>
             <div class="partie">               
-                <input type="radio" name="cotisant" value="false" id="cotisant" class="round-radio" v-model="form.cotisant" checked > 
-                <label for="cotisant">
-                    <div class="radio">
-                        <div class="in"></div>
+                <label style="position: relative;top: 12px;">Cotisant: </label>
+                <input type="checkbox" name="cotisant" value="false" id="cotisant" class="round-radio" v-model="form.cotisant"> 
+                
+                <label title="If check the product will go in debt" for="cotisant">    
+                  
+                    <div class="slider button-big">
+                        <div class="puce">
+                            
+                        </div>    
                     </div>
-                    Non cotisant
+                    <span class="textActiv text">
+                        Oui
+                    </span>
+                    <span class="textUnactiv text">
+                        Non
+                    </span>
                 </label>
-                <input type="radio" name="cotisant" value="true" id="nonCotisant" class="round-radio" v-model="form.cotisant"> 
-                <label for="nonCotisant">
-                    <div class="radio">
-                    
-                        <div class="in"></div>
-                      </div>
-                    Cotisant
-                </label>                
+                 
             </div>
             <div class="partie no-line">
-                <div class="form">
+                <div class="center">
                     <a class="button" @click="createUser">Creer</a>
                 </div>
             </div>
@@ -75,10 +78,10 @@ export default {
         password: '',
         nom: '',
         prenom: '',
-        cotisant: 'false',
+        cotisant: false,
         pseudo: '',
         mail: '',
-        telephone: ''
+        telephone: 'none'
       },
       msgReussite: '',
       msgError: ''

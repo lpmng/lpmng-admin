@@ -53,21 +53,23 @@
               </div>
               <br/>
               
-              <input type="radio" name="cotisant" value="false" id="cotisant" class="round-radio" checked> 
-              <label for="cotisant">
-                  <div class="radio">
-                      <div class="in"></div>
-                  </div>
-                  Non cotisant
-              </label>
-              <input type="radio" name="cotisant" value="true" id="nonCotisant" class="round-radio"> 
-              <label for="nonCotisant">
-                  <div class="radio">
+              <label style="position: relative;top: 12px;" class="vertical">Cotisant: </label>
+                <input type="checkbox" name="cotisant" value="false" id="cotisant" class="round-radio" v-model="form.cotisant"> 
+                
+                <label title="If check the product will go in debt" for="cotisant">    
                   
-                      <div class="in"></div>
+                    <div class="slider button-big">
+                        <div class="puce">
+                            
+                        </div>    
                     </div>
-                  Cotisant
-              </label>
+                    <span class="textActiv text">
+                        Oui
+                    </span>
+                    <span class="textUnactiv text">
+                        Non
+                    </span>
+                </label>
               <input type="button" value="Modifier"/>
               <br/>
           </div>
@@ -90,7 +92,7 @@ export default {
         password: '',
         nom: this.nom,
         prenom: this.prenom,
-        cotisant: this.cotisant,
+        cotisant: false,
         nombreSessions: this.nombreSessions,
         mail: this.mail,
         tel: this.tel

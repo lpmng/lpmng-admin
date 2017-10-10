@@ -1,6 +1,7 @@
 <template>
     <nav id="submenu">
-        <img src="../../src/assets/menu.svg" class="hamburger" @click="displayMenu"/>
+        <img src="../../src/assets/IcoMoon/SVG/323-circle-right.svg" class="hamburger" @click="displayMenu" v-if="!menuVisible"/>
+        <img src="../../src/assets/IcoMoon/SVG/325-circle-left.svg" class="hamburger" @click="displayMenu" v-if="menuVisible"/>
         <div id="submenu-content" v-if="menuVisible">
             <h2>{{title}}</h2>
             <router-link v-for="link in links" :to="{name: link.link}" :key="link.id">

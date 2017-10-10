@@ -61,6 +61,8 @@ body,html
     left: 10px;
     width: 40px;
     z-index: 50;
+    filter: invert(100%);
+    
 }
 
 /***************************************/

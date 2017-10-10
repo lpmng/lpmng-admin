@@ -14,9 +14,9 @@
             <div class="username">{{user.uid}}</div>
             <div class="name">{{user.commonname}} {{user.surname}}</div>
             <div class="actions">
-              <img src="../../../src/assets/helium/confirm.svg" class="button"/>
-              <img src="../../../src/assets/helium/edit.svg" class="button" @click="displayChangeUser"/>
-              <img src="../../../src/assets/helium/delete.svg" class="button" @click="displaySupprUser" v-bind:pseudo="user.uid"/>
+              <img src="../../../src/assets/IcoMoon/SVG/273-checkmark.svg" class="button"/>
+              <img src="../../../src/assets/IcoMoon/SVG/006-pencil.svg" class="button" @click="displayChangeUser"/>
+              <img src="../../../src/assets/IcoMoon/SVG/173-bin.svg" class="button" @click="displaySupprUser" v-bind:pseudo="user.uid"/>
             </div>
         </label>        
       </div>

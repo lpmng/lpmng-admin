@@ -15,7 +15,7 @@
             <div class="name">{{user.commonname}} {{user.surname}}</div>
             <div class="actions">
               <img src="../../../src/assets/helium/confirm.svg" class="button"/>
-              <img src="../../../src/assets/helium/edit.svg" class="button"/>
+              <img src="../../../src/assets/helium/edit.svg" class="button" @click="displayChangeUser"/>
               <img src="../../../src/assets/helium/delete.svg" class="button" @click="displaySupprUser" v-bind:pseudo="user.uid"/>
             </div>
         </label>        
@@ -29,13 +29,59 @@
 
     </infos-user>
     -->
-  <div class="modal-back" v-if="supprUser">
-    <div class="modal">
-      <h2>Supprimer l'utilisateur ?</h2>
-      <a class="button">Oui</a>
-      <a class="button" @click="displaySupprUser">Non</a>
+
+    <!--    ================== Modals ===================    !-->
+
+    <!-- delete modal -->
+    <div class="modal-back" v-if="supprUserVisible">
+      <div class="modal">
+        <h2>Supprimer {{pseudoSelected}} ?</h2>
+        <a class="button">Oui</a>
+        <a class="button" @click="displaySupprUser">Non</a>
+      </div>
     </div>
-  </div>
+
+
+    <!-- modif modal -->
+    <div class="modal-back" v-if="changeUserVisible">
+      <div class="modal">
+        <h2>Modification de <span class="username">{{pseudoSelected}}</span> </h2>
+        <form>
+          <!-- nom -->
+          <div class="input">
+          <label for="nom">Nom:</label>
+          <input type="text" name="nom" id="nom"/>
+          <a class="button">Modifier</a>
+          </div>
+          <!-- prenom -->
+          <div class="input">
+          <label for="prenom">Prénom:</label>
+          <input type="text" name="prenom" id="prenom"/>
+          <a class="button">Modifier</a>
+          </div>
+          <!-- mail -->
+          <div class="input">
+          <label for="mail">Mail:</label>
+          <input type="mail" name="pseudo" id="mail"/>
+          <a class="button">Modifier</a>
+          </div>
+          <!-- tel -->
+          <div class="input">
+          <label for="telephone">Téléphone:</label>
+          <input type="tel" name="telephone" id="telephone"/>
+          <a class="button">Modifier</a>
+          </div>
+
+          <div class="input">
+          <label for="password">Mot de passe:</label>
+          <input type="password" name="password" id="password"/>
+          <a class="button">Modifier</a>
+          </div>
+
+        </form>
+        <a class="button" @click="displayChangeUser">Retour</a>
+      </div>
+    </div>
   </main>
   
 </template>
@@ -53,9 +99,9 @@ export default {
       listUsers: {},
       msgError: '',
       pseudos: {},
-      supprUser: false,
-      menuVisible: true,
-      pseudoButton: ''
+      supprUserVisible: false,
+      changeUserVisible: false,
+      menuVisible: true
     }
   },
   watch:
@@ -74,7 +120,10 @@ export default {
   },
   methods: {
     displaySupprUser () {
-      this.supprUser = !this.supprUser
+      this.supprUserVisible = !this.supprUserVisible
+    },
+    displayChangeUser () {
+      this.changeUserVisible = !this.changeUserVisible
     },
     displayMenu () {
       console.log('wout')

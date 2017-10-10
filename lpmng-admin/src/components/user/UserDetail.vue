@@ -1,31 +1,43 @@
 <template>
   <main class=""> 
     <sub-menu-vertical></sub-menu-vertical>
-    <nav id="searchmenu">
-        <img src="../../../src/assets/menu.svg" class="hamburger" @click="displayMenu"/>
-        <div id="searchmenu-content" v-if="menuVisible">
-        <div class="infos negatif" v-if="msgError">{{msgError}}</div>
-        <input type="search" v-model="search">
-        <!-- results search (use radio input to permit the utilisation of v-bind properties)-->
-        <div v-for="user in pseudos">
-          <input type="radio" name="search" class="search-result" v-bind:value="user.uid" v-bind:id="'id-'+user.uid" v-model="pseudoSelected"> 
-          <label v-bind:for="'id-'+user.uid">
-              
-              <div>{{user.uid}}</div>
-              <small>{{user.commonname}} {{user.surname}}</small>
-              <div class="separateur"></div>
-          </label>        
-        </div>
-        </div>
-    </nav>
+    <section id="content" class="searchUser">
+      <h1>Rechercher un utilisateur</h1>
+      <div class="infos negatif" v-if="msgError">{{msgError}}</div>
+      <input type="search" v-model="search">
+    
+    <!-- results search (use radio input to permit the utilisation of v-bind properties)-->
+      <div v-for="user in pseudos" class="searchResult">
+        <input type="radio" name="search" class="search-result" v-bind:value="user.uid" v-bind:id="'id-'+user.uid" v-model="pseudoSelected"> 
+        <label v-bind:for="'id-'+user.uid">
+            
+            <div class="username">{{user.uid}}</div>
+            <div class="name">{{user.commonname}} {{user.surname}}</div>
+            <div class="actions">
+              <img src="../../../src/assets/helium/confirm.svg" class="button"/>
+              <img src="../../../src/assets/helium/edit.svg" class="button"/>
+              <img src="../../../src/assets/helium/delete.svg" class="button" @click="displaySupprUser" v-bind:pseudo="user.uid"/>
+            </div>
+        </label>        
+      </div>
+    </section>
+    <!--
     <infos-user v-if="pseudoSelected" v-bind:pseudo="pseudoSelected"                        v-bind:nom="listUsers[pseudoSelected].surname" 
                                       v-bind:prenom="listUsers[pseudoSelected].commonname"  v-bind:cotisant="listUsers[pseudoSelected].cotisant" 
                                       v-bind:nombreSessions="listUsers[pseudoSelected].nombreSessions"
                                       v-bind:tel="listUsers[pseudoSelected].tel"            v-bind:mail="listUsers[pseudoSelected].mail">
 
     </infos-user>
-
+    -->
+  <div class="modal-back" v-if="supprUser">
+    <div class="modal">
+      <h2>Supprimer l'utilisateur ?</h2>
+      <a class="button">Oui</a>
+      <a class="button" @click="displaySupprUser">Non</a>
+    </div>
+  </div>
   </main>
+  
 </template>
 
 <script>
@@ -41,7 +53,9 @@ export default {
       listUsers: {},
       msgError: '',
       pseudos: {},
-      menuVisible: true
+      supprUser: false,
+      menuVisible: true,
+      pseudoButton: ''
     }
   },
   watch:
@@ -59,6 +73,9 @@ export default {
     }
   },
   methods: {
+    displaySupprUser () {
+      this.supprUser = !this.supprUser
+    },
     displayMenu () {
       console.log('wout')
       this.menuVisible = !this.menuVisible

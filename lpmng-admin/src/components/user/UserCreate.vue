@@ -116,6 +116,9 @@ export default {
         .then((response) => {
           this.msgReussite = 'réussi'
           this.msgError = ''
+          this.form.prenom = ''
+          this.form.nom = ''
+          this.form.password = ''
         })
         .catch((error) => {
           console.log(error)

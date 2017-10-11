@@ -5,8 +5,7 @@
         <h1>Ajouter un utilisateur</h1>
         <div class="infos positif" v-if="msgReussite">{{msgReussite}}</div>
         <div class="infos negatif" v-if="msgError">{{msgError}}</div>
-        <form>
-
+        <form v-on:submit="createUser">
             <div class="partie">
                 <div class="input">
                 <label for="nom">Nom:</label>
@@ -57,7 +56,7 @@
             </div>
             <div class="partie no-line">
                 <div class="center">
-                    <a class="button" @click="createUser">Creer</a>
+                    <input class="button" type="submit" value="Créer"/>
                 </div>
             </div>
         </form>
@@ -86,7 +85,8 @@ export default {
     }
   },
   methods: {
-    createUser () {
+    createUser (e) {
+      e.preventDefault()
       scroll(0, 0)
       // verify informations
       if (

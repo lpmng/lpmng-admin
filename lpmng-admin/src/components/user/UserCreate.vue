@@ -3,8 +3,9 @@
     <sub-menu-vertical></sub-menu-vertical>
     <section id="content">
         <h1>Ajouter un utilisateur</h1>
-        <div class="infos positif" v-if="msgReussite">{{msgReussite}}</div>
-        <div class="infos negatif" v-if="msgError">{{msgError}}</div>
+        <div id="notifs">
+          <notification v-for="notif in notifs" v-bind:type="notif.type" v-bind:msg="notif.msg" ></notification>
+        </div>
         <form>
 
             <div class="partie">
@@ -69,6 +70,7 @@
 
 <script>
 import UserMenu from '@/components/user/UserMenu'
+import Notif from '@/components/Notif'
 import axios from 'axios'
 export default {
   name: 'UserCreate',
@@ -84,10 +86,18 @@ export default {
         telephone: 'none'
       },
       msgReussite: '',
-      msgError: ''
+      msgError: '',
+      notifs: []
     }
   },
   methods: {
+    addNotif (msg, type) {
+      var myNotif = {
+        'msg': msg,
+        'type': type
+      }
+      this.notifs.push(myNotif)
+    },
     createUser () {
       scroll(0, 0)
       console.log('---- yop ----')
@@ -122,18 +132,17 @@ export default {
         })
         .catch((error) => {
           console.log(error)
-          this.msgReussite = ''
-          this.msgError = 'Une erreur est survenu'
+          this.addNotif('Une erreur est survenu', 'error')
         })
       } else {
-        this.msgReussite = ''
-        this.msgError = 'Les champs sont incomplets'
+        this.addNotif('Les champs sont incomplets', 'error')
       }
     }
   },
   components:
   {
-    'sub-menu-vertical': UserMenu
+    'sub-menu-vertical': UserMenu,
+    'notification': Notif
   },
   watch:
   {

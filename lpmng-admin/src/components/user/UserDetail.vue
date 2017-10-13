@@ -3,7 +3,9 @@
     <sub-menu-vertical></sub-menu-vertical>
     <section id="content" class="searchUser">
       <h1>Rechercher un utilisateur</h1>
-      <div class="infos negatif" v-if="msgError">{{msgError}}</div>
+      <div id="notifs">
+          <notification v-for="notif in notifs" v-bind:type="notif.type" v-bind:msg="notif.msg" @click="removeNotif(notif)"></notification>
+      </div>
       <input type="search" v-model="search">
 
     <!-- results search (use radio input to permit the utilisation of v-bind properties)-->
@@ -19,7 +21,16 @@
               <img src="../../../src/assets/IcoMoon/SVG/173-bin.svg" class="button" @click="displaySupprUser" v-bind:pseudo="user.uid"/>
             </div>
         </label>
+        <div v-if="pseudoSelected == user.uid" class="description">
+          <div class="info"><h3>Nom:</h3>{{user.surname}}</div>
+          <div class="info"><h3>Prenom:</h3>{{user.commonname}}</div>
+          <div class="info"><h3>Cotisant:</h3>?</div>
+          <div class="info"><h3>Nombre session:</h3>?</div>
+          <div class="info"><h3>Mail:</h3>{{user.mail}}</div>
+          <div class="info"><h3>Téléphone:</h3>{{user.tel}}</div>
+        </div>
       </div>
+      
     </section>
 
     <div class="modal-back" v-if="supprUserVisible">
@@ -141,6 +152,22 @@ export default {
           console.log(error)
           this.msgError = 'Erreur de la requète.'
         })
+    },
+    // notification
+    addNotif (msg, type) {
+      var myNotif = {
+        'msg': msg,
+        'type': type
+      }
+      this.notifs.push(myNotif)
+      setTimeout(() => {
+        this.removeNotif(myNotif)
+      }, 5000)
+    },
+    removeNotif (notif) {
+      console.log('wololo')
+      var i = this.notifs.indexOf(notif)
+      this.notifs.splice(i, 1)
     }
   },
   mounted: function () {
@@ -166,3 +193,22 @@ export default {
 }
 
 </script>
+
+<style>
+  .description
+  {
+    width: 500px;
+    margin: auto;
+    border-color: white;
+    background-color: white;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(150,150,150,0.2);
+  }
+
+  .description h3
+  {
+    display: inline-block;
+    min-width: 240px;
+  }
+</style>

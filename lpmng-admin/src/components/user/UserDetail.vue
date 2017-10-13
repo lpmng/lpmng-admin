@@ -204,6 +204,7 @@ export default {
     padding: 10px;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(150,150,150,0.2);
+    border-top: 1px solid chocolate;
   }
 
   .description h3

@@ -2,66 +2,62 @@
   <main class="">
     <sub-menu-vertical></sub-menu-vertical>
     <section id="content">
-        <h1>Ajouter un utilisateur</h1>
-        <div id="notifs">
-          <notification v-for="notif in notifs" v-bind:type="notif.type" v-bind:msg="notif.msg" ></notification>
+      <h1>Ajouter un utilisateur</h1>
+      <div id="notifs">
+        <notification v-for="notif in notifs" v-bind:type="notif.type" v-bind:msg="notif.msg"></notification>
+      </div>
+      <form v-on:submit="createUser">
+        <div class="partie">
+          <div class="input">
+            <label for="nom">Nom:</label>
+            <input type="text" name="nom" id="nom" v-model="form.surname"/>
+          </div>
+          <div class="input">
+            <label for="prenom">Prénom:</label>
+            <input type="text" name="prenom" id="prenom" v-model="form.commonname"/>
+          </div>
         </div>
-        <form v-on:submit="createUser">
-
-            <div class="partie">
-                <div class="input">
-                <label for="nom">Nom:</label>
-                <input type="text" name="nom" id="nom" v-model="form.surname"/>
-                </div>
-                <div class="input">
-                <label for="prenom">Prénom:</label>
-                <input type="text" name="prenom" id="prenom" v-model="form.commonname"/>
-                </div>
+        <div class="partie">
+          <div class="input">
+            <label for="pseudo">Pseudo:</label>
+            <input type="text" name="pseudo" id="pseudo" v-model="form.uid"/>
+          </div>
+          <div class="input">
+            <label for="password">Mot de passe:</label>
+            <input type="password" name="password" id="password" v-model="form.password"/>
+          </div>
+        </div>
+        <div class="partie">
+          <div class="input">
+            <label for="mail">Mail:</label>
+            <input type="mail" name="pseudo" id="mail" v-model="form.mail"/>
+          </div>
+          <div class="input">
+            <label for="telephone">Téléphone:</label>
+            <input type="tel" name="telephone" id="telephone" v-model="form.tel"/>
+          </div>
+        </div>
+        <div class="partie">
+          <label style="position: relative;top: 12px;">Cotisant: </label>
+          <input type="checkbox" name="cotisant" value="false" id="cotisant" class="round-radio" v-model="form.cotisant">
+          <label title="If check the product will go in debt" for="cotisant">
+            <div class="slider button-big">
+              <div class="puce"></div>
             </div>
-            <div class="partie">
-                    <div class="input">
-                    <label for="pseudo">Pseudo:</label>
-                    <input type="text" name="pseudo" id="pseudo" v-model="form.uid"/>
-                    </div>
-                    <div class="input">
-                    <label for="password">Mot de passe:</label>
-                    <input type="password" name="password" id="password" v-model="form.password"/>
-                    </div>
-            </div>
-            <div class="partie">
-                    <div class="input">
-                    <label for="mail">Mail:</label>
-                    <input type="mail" name="pseudo" id="mail" v-model="form.mail"/>
-                    </div>
-                    <div class="input">
-                    <label for="telephone">Téléphone:</label>
-                    <input type="tel" name="telephone" id="telephone" v-model="form.tel"/>
-                    </div>
-            </div>
-            <div class="partie">
-                <label style="position: relative;top: 12px;">Cotisant: </label>
-                <input type="checkbox" name="cotisant" value="false" id="cotisant" class="round-radio" v-model="form.cotisant">
-
-                <label title="If check the product will go in debt" for="cotisant">
-
-                    <div class="slider button-big">
-                        <div class="puce"></div>
-                    </div>
-                    <span class="textActiv text">
-                        Oui
-                    </span>
-                    <span class="textUnactiv text">
-                        Non
-                    </span>
-                </label>
-
-            </div>
-            <div class="partie no-line">
-                <div class="center">
-                    <input class="button" type="submit" value="Créer"/>
-                </div>
-            </div>
-        </form>
+            <span class="textActiv text">
+              Oui
+            </span>
+            <span class="textUnactiv text">
+              Non
+            </span>
+          </label>
+        </div>
+        <div class="partie no-line">
+          <div class="center">
+            <input class="button" type="submit" value="Créer"/>
+          </div>
+        </div>
+      </form>
     </section>
   </main>
 </template>

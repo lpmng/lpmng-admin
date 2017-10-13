@@ -83,8 +83,6 @@ export default {
         mail: '',
         tel: ''
       },
-      msgReussite: '',
-      msgError: '',
       notifs: []
     }
   },
@@ -95,6 +93,14 @@ export default {
         'type': type
       }
       this.notifs.push(myNotif)
+      setTimeout(() => {
+        this.removeNotif(myNotif)
+      }, 5000)
+    },
+    removeNotif (notif) {
+      console.log('wololo')
+      var i = this.notifs.indexOf(notif)
+      this.notifs.splice(i, 1)
     },
     createUser (e) {
       e.preventDefault()

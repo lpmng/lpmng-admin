@@ -3,11 +3,14 @@
     <sub-menu-vertical></sub-menu-vertical>
     <section id="content" class="searchUser">
       <h1>Rechercher un utilisateur</h1>
-      <div id="notifs">
-          <notification v-for="notif in notifs" v-bind:type="notif.type" v-bind:msg="notif.msg" @click="removeNotif(notif)"></notification>
-      </div>
       <input type="search" v-model="search">
-
+      <div class="lds-ripple" v-if="loaderVisible">
+        <div></div>
+        <div></div>
+      </div>
+      <div id="notifs">
+          <notification v-for="notif in notifs" v-bind:type="notif.type" v-bind:msg="notif.msg" ></notification>
+      </div>
     <!-- results search (use radio input to permit the utilisation of v-bind properties)-->
       <div v-for="user in pseudos" class="searchResult">
         <input type="radio" name="search" class="search-result" v-bind:value="user.uid" v-bind:id="'id-'+user.uid" v-model="pseudoSelected">
@@ -18,7 +21,7 @@
             <div class="actions">
               <img src="../../../src/assets/IcoMoon/SVG/273-checkmark.svg" class="button"/>
               <img src="../../../src/assets/IcoMoon/SVG/006-pencil.svg" class="button" @click="displayChangeUser(user)"/>
-              <img src="../../../src/assets/IcoMoon/SVG/173-bin.svg" class="button" @click="displaySupprUser" v-bind:pseudo="user.uid"/>
+              <img src="../../../src/assets/IcoMoon/SVG/173-bin.svg" class="button" @click="displaySupprUser(user)" v-bind:pseudo="user.uid"/>
             </div>
         </label>
         <div v-if="pseudoSelected == user.uid" class="description">
@@ -36,8 +39,8 @@
     <div class="modal-back" v-if="supprUserVisible">
       <div class="modal">
         <h2>Supprimer {{pseudoSelected}} ?</h2>
-        <a class="button">Oui</a>
-        <a class="button" @click="displaySupprUser">Non</a>
+        <a class="button" @click="deleteUser">Oui</a>
+        <a class="button" @click="hideDeleteUser">Non</a>
       </div>
     </div>
 
@@ -85,6 +88,7 @@
 <script>
 import UserMenu from '@/components/user/UserMenu'
 import UserDetailUniq from '@/components/user/UserDetailUniq'
+import Notif from '@/components/Notif'
 import axios from 'axios'
 export default {
   name: 'UserDetail',
@@ -94,15 +98,17 @@ export default {
       pseudoSelected: '',
       userSelected: {},
       listUsers: {},
-      msgError: '',
       pseudos: {},
       supprUserVisible: false,
       changeUserVisible: false,
-      menuVisible: true
+      menuVisible: true,
+      loaderVisible: true,
+      notifs: []
     }
   },
   watch:
   {
+    // search users
     search: function (val) {
       var pseudosTmp = []
       for (var key in this.listUsers) {
@@ -114,12 +120,27 @@ export default {
     }
   },
   methods: {
-    displaySupprUser () {
+    deleteUser () {
+      axios.delete(`${window.core_url}users/${this.userSelected.uid}/`).then((response) => {
+        delete this.listUsers[this.userSelected.uid]
+        console.log(this.userSelected.uid + ' delete')
+        this.hideDeleteUser()
+      })
+      .catch((error) => {
+        console.log(error)
+        this.addNotif(this.userSelected.uid + ' n\'a pas été supprimé', 'error')
+      })
+    },
+    displaySupprUser (user) {
+      this.userSelected = Object.assign({}, user)
       this.supprUserVisible = !this.supprUserVisible
     },
     displayChangeUser (user) {
       this.changeUserVisible = true
       this.userSelected = Object.assign({}, user)
+    },
+    hideDeleteUser () {
+      this.supprUserVisible = false
     },
     hideChangeUser () {
       this.changeUserVisible = false
@@ -171,6 +192,7 @@ export default {
     }
   },
   mounted: function () {
+    // lists all users when page load
     axios.get(window.core_url + 'users/', {})
     .then((response) => {
       response.data.forEach(function (element) {
@@ -179,16 +201,19 @@ export default {
         this.listUsers[element.uid].nombreSessions = '0'
       }, this)
       this.pseudos = this.listUsers
+      this.loaderVisible = false
     })
     .catch((error) => {
       console.log(error)
-      this.msgError = 'Erreur de la requète'
+      this.loaderVisible = false
+      this.addNotif('Erreur de la requète', 'error')
     })
   },
   components:
   {
     'sub-menu-vertical': UserMenu,
-    'infos-user': UserDetailUniq
+    'infos-user': UserDetailUniq,
+    'notification': Notif
   }
 }
 
@@ -202,14 +227,89 @@ export default {
     border-color: white;
     background-color: white;
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 0px 0px 10px 10px;
     box-shadow: 0px 0px 10px rgba(150,150,150,0.2);
+    border-width: 1px;
+    border-style: solid;
+    border-image: linear-gradient(to bottom, chocolate, rgba(0, 0, 0, 0)) 1 100%;
     border-top: 1px solid chocolate;
+    position: relative;
   }
 
+  .description::before
+  {
+    top:0px;
+    height: 1px;
+    border-top:  1px solid chocolate;
+    border-radius: 10px;
+    width: 522px;
+    position: relative;
+    content: "";
+    top: -12px;
+    left: -11px;
+    display: block;
+  }
   .description h3
   {
     display: inline-block;
     min-width: 240px;
   }
+
+  /****************************/
+
+  @-webkit-keyframes lds-ripple {
+  0% {
+    top: 90px;
+    left: 90px;
+    width: 0;
+    height: 0;
+    opacity: 1;
+  }
+  100% {
+    top: 15px;
+    left: 15px;
+    width: 150px;
+    height: 150px;
+    opacity: 0;
+  }
+}
+@keyframes lds-ripple {
+  0% {
+    top: 90px;
+    left: 90px;
+    width: 0;
+    height: 0;
+    opacity: 1;
+  }
+  100% {
+    top: 15px;
+    left: 15px;
+    width: 150px;
+    height: 150px;
+    opacity: 0;
+  }
+}
+.lds-ripple {
+  position: relative;
+  width: 200px;
+  margin: auto;
+}
+.lds-ripple div {
+  box-sizing: content-box;
+  position: absolute;
+  border-width: 10px;
+  border-style: solid;
+  opacity: 1;
+  border-radius: 50%;
+  -webkit-animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+  animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+.lds-ripple div:nth-child(1) {
+  border-color: orange;
+}
+.lds-ripple div:nth-child(2) {
+  border-color: orange;
+  -webkit-animation-delay: -0.5s;
+  animation-delay: -0.5s;
+}
 </style>

@@ -16,7 +16,10 @@
         <input type="radio" name="search" class="search-result" v-bind:value="user.uid" v-bind:id="'id-'+user.uid" v-model="pseudoSelected">
         <label v-bind:for="'id-'+user.uid">
 
-            <div class="username">{{user.uid}}</div>
+            <div class="username">
+              {{user.uid}} 
+              <img src="../../../src/assets/IcoMoon/SVG/114-user.svg" class="button" @click="displayChangeUid(user)"/>
+            </div>
             <div class="name">{{user.commonname}} {{user.surname}}</div>
             <div class="actions">
               <img src="../../../src/assets/IcoMoon/SVG/273-checkmark.svg" class="button"/>
@@ -35,6 +38,29 @@
       </div>
       
     </section>
+
+    <!-- .'.'.'.'. Modals .'.'.'.'. -->
+
+    <div class="modal-back" v-if="changeUidVisible">
+      <div class="modal">
+        <h2>Modifier {{pseudoSelected}} ?</h2>
+        <div class="input">
+            <label for="uid">Nouveau pseudo:</label>
+            <input type="text" name="uid" id="uid" v-model="userSelected.uid"/>
+        </div>
+        <a class="button" @click="displayConfirmChangeUid">Oui</a>
+        <a class="button" @click="hideChangeUid">Non</a>
+      </div>
+    </div>
+
+    <div class="modal-back" v-if="confirmChangeUidVisible">
+      <div class="modal">
+        <h2>Êtes vous sur?</h2>
+        <p>Cela peut mener à des incohérence dans la bdd... </p>
+        <a class="button" >Oui</a>
+        <a class="button" @click="hideConfirmChangeUid">Non</a>
+      </div>
+    </div>
 
     <div class="modal-back" v-if="supprUserVisible">
       <div class="modal">
@@ -101,6 +127,8 @@ export default {
       pseudos: {},
       supprUserVisible: false,
       changeUserVisible: false,
+      changeUidVisible: false,
+      confirmChangeUidVisible: false,
       menuVisible: true,
       loaderVisible: true,
       notifs: []
@@ -138,6 +166,20 @@ export default {
     displayChangeUser (user) {
       this.changeUserVisible = true
       this.userSelected = Object.assign({}, user)
+    },
+    displayChangeUid (user) {
+      this.userSelected = Object.assign({}, user)
+      this.changeUidVisible = !this.changeUidVisible
+    },
+    displayConfirmChangeUid () {
+      this.hideChangeUid()
+      this.confirmChangeUidVisible = true
+    },
+    hideChangeUid () {
+      this.changeUidVisible = false
+    },
+    hideConfirmChangeUid () {
+      this.confirmChangeUidVisible = false
     },
     hideDeleteUser () {
       this.supprUserVisible = false
@@ -227,13 +269,15 @@ export default {
     border-color: white;
     background-color: white;
     padding: 10px;
-    border-radius: 0px 0px 10px 10px;
+    border-radius: 0px 0px 5px 5px;
     box-shadow: 0px 0px 10px rgba(150,150,150,0.2);
     border-width: 1px;
     border-style: solid;
     border-image: linear-gradient(to bottom, chocolate, rgba(0, 0, 0, 0)) 1 100%;
     border-top: 1px solid chocolate;
     position: relative;
+    animation-name: show_description;
+    animation-duration: 0.3s;
   }
 
   .description::before
@@ -241,7 +285,7 @@ export default {
     top:0px;
     height: 1px;
     border-top:  1px solid chocolate;
-    border-radius: 10px;
+    border-radius: 5px;
     width: 522px;
     position: relative;
     content: "";
@@ -253,6 +297,12 @@ export default {
   {
     display: inline-block;
     min-width: 240px;
+    margin: 10px;
+  }
+
+  @keyframes show_description{
+    from {height: 0px}
+    to {height: 250px}
   }
 
   /****************************/

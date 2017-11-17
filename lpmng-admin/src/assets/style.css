@@ -273,6 +273,15 @@ small
     position: relative;
 }
 
+.searchResult label.isValid
+{
+    background-color: rgb(3, 219, 3);
+}
+
+.searchResult .isValid .name
+{
+    color:white;
+}
 
 .searchResult .username
 {
@@ -376,6 +385,11 @@ label
     min-width: 200px;
     display: inline-block;
     text-align: left;
+}
+
+input:focus
+{
+    outline: none;
 }
 /* input radio */
 input[type=radio].round-radio, input[type=radio].search-result

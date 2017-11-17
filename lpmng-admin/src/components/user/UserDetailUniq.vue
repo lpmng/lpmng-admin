@@ -1,7 +1,13 @@
 <template>
     <section id="content">
-        <div class="infos positif" v-if="msgReussite">{{msgReussite}}</div>
-        <div class="infos negatif" v-if="msgError">{{msgError}}</div>
+        <div class="notif positif" v-if="msgReussite">
+            <img class="icon" src="../../../src/assets/IcoMoon/SVG/273-checkmark.svg"/> 
+            <p>{{msgReussite}}</p>
+        </div>
+        <div class="notif negatif" v-if="msgError"> 
+            <img class="icon" src="../../../src/assets/IcoMoon/SVG/272-cross.svg"/> 
+            <p>{{msgError}}</p>
+        </div>
         <h1>{{this.pseudo}}</h1>
         <div class="description">
           <div class="partie center">

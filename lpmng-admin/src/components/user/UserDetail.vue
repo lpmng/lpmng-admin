@@ -14,15 +14,15 @@
     <!-- results search (use radio input to permit the utilisation of v-bind properties)-->
       <div v-for="user in pseudos" class="searchResult">
         <input type="radio" name="search" class="search-result" v-bind:value="user.uid" v-bind:id="'id-'+user.uid" v-model="pseudoSelected">
-        <label v-bind:for="'id-'+user.uid">
+        <label v-bind:for="'id-'+user.uid" v-bind:id="'id-Description-'+user.uid" v-bind:class="{ isValid: user.isValid }">
 
             <div class="username">
               {{user.uid}} 
-              <img src="../../../src/assets/IcoMoon/SVG/114-user.svg" class="button" @click="displayChangeUid(user)"/>
+              <img src="../../../src/assets/IcoMoon/SVG/114-user.svg" class="button" @click="displayChangeUid(user)" />
             </div>
             <div class="name">{{user.commonname}} {{user.surname}}</div>
             <div class="actions">
-              <img src="../../../src/assets/IcoMoon/SVG/273-checkmark.svg" class="button"/>
+              <img src="../../../src/assets/IcoMoon/SVG/273-checkmark.svg" class="button" @click="validUser(user)"/>
               <img src="../../../src/assets/IcoMoon/SVG/006-pencil.svg" class="button" @click="displayChangeUser(user)"/>
               <img src="../../../src/assets/IcoMoon/SVG/173-bin.svg" class="button" @click="displaySupprUser(user)" v-bind:pseudo="user.uid"/>
             </div>
@@ -159,6 +159,23 @@ export default {
         this.addNotif(this.userSelected.uid + ' n\'a pas été supprimé', 'error')
       })
     },
+    validUser (user) {
+      var finalObj
+      if (user.isValid) {
+        finalObj = {'access': ''}
+      } else {
+        finalObj = {'access': 'true'}
+      }
+      axios.patch(`${window.core_url}groups/${user.uid}/`, finalObj)
+        .then((response) => {
+          this.addNotif('validation de ' + user.uid + ' :' + !user.isValid, 'success')
+          user.isValid = !user.isValid
+        })
+        .catch((error) => {
+          console.log(error)
+          this.addNotif('Erreur requete - validation de ' + user.uid, 'error')
+        })
+    },
     displaySupprUser (user) {
       this.userSelected = Object.assign({}, user)
       this.supprUserVisible = !this.supprUserVisible
@@ -213,7 +230,7 @@ export default {
         })
         .catch((error) => {
           console.log(error)
-          this.msgError = 'Erreur de la requète.'
+          this.addNotif('Erreur de la requète - change password', 'error')
         })
     },
     // notification
@@ -234,6 +251,7 @@ export default {
     }
   },
   mounted: function () {
+    var listPromise = []
     // lists all users when page load
     axios.get(window.core_url + 'users/', {})
     .then((response) => {
@@ -241,14 +259,34 @@ export default {
         this.listUsers[element.uid] = element
         this.listUsers[element.uid].cotisant = 'non'
         this.listUsers[element.uid].nombreSessions = '0'
+        // this.listUsers[element.uid].isValid = true
+        console.log(this)
+        listPromise.push(
+          axios.get(window.core_url + 'groups/' + element.uid + '/', {})
+            .then((response) => {
+              console.log(response.data.has_access)
+              this.listUsers[element.uid].isValid = response.data.has_access
+              console.log(this)
+            }
+          )
+        )
       }, this)
-      this.pseudos = this.listUsers
+
+      Promise.all(listPromise).then(
+        (responses) => {
+          this.pseudos = this.listUsers
+        }
+      )
+      .catch((error) => {
+        console.log(error)
+        this.addNotif('Erreur requete - user valide', 'error')
+      })
       this.loaderVisible = false
     })
     .catch((error) => {
       console.log(error)
       this.loaderVisible = false
-      this.addNotif('Erreur de la requète', 'error')
+      this.addNotif('Erreur de la requète - liste users', 'error')
     })
   },
   components:

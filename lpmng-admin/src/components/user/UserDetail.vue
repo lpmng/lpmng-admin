@@ -13,26 +13,26 @@
       </div>
     <!-- results search (use radio input to permit the utilisation of v-bind properties)-->
       <div v-for="user in pseudos" class="searchResult">
-        <input type="radio" name="search" class="search-result" v-bind:value="user.uid" v-bind:id="'id-'+user.uid" v-model="pseudoSelected">
-        <label v-bind:for="'id-'+user.uid" v-bind:id="'id-Description-'+user.uid" v-bind:class="{ isValid: user.isValid }">
+        <input type="radio" name="search" class="search-result" v-bind:value="user.username" v-bind:id="'id-'+user.username" v-model="pseudoSelected">
+        <label v-bind:for="'id-'+user.username" v-bind:id="'id-Description-'+user.username" v-bind:class="{ isValid: user.isValid }">
 
             <div class="username">
-              {{user.uid}} 
+              {{user.username}} 
               <img src="../../../src/assets/IcoMoon/SVG/114-user.svg" class="button" @click="displayChangeUid(user)" />
             </div>
-            <div class="name">{{user.commonname}} {{user.surname}}</div>
+            <div class="name">{{user.first_name}} {{user.last_name}}</div>
             <div class="actions">
               <img src="../../../src/assets/IcoMoon/SVG/273-checkmark.svg" class="button" @click="validUser(user)"/>
               <img src="../../../src/assets/IcoMoon/SVG/006-pencil.svg" class="button" @click="displayChangeUser(user)"/>
-              <img src="../../../src/assets/IcoMoon/SVG/173-bin.svg" class="button" @click="displaySupprUser(user)" v-bind:pseudo="user.uid"/>
+              <img src="../../../src/assets/IcoMoon/SVG/173-bin.svg" class="button" @click="displaySupprUser(user)" v-bind:pseudo="user.username"/>
             </div>
         </label>
-        <div v-if="pseudoSelected == user.uid" class="description">
-          <div class="info"><h3>Nom:</h3>{{user.surname}}</div>
-          <div class="info"><h3>Prenom:</h3>{{user.commonname}}</div>
+        <div v-if="pseudoSelected == user.username" class="description">
+          <div class="info"><h3>Nom:</h3>{{user.last_name}}</div>
+          <div class="info"><h3>Prenom:</h3>{{user.first_name}}</div>
           <div class="info"><h3>Cotisant:</h3>?</div>
           <div class="info"><h3>Nombre session:</h3>?</div>
-          <div class="info"><h3>Mail:</h3>{{user.mail}}</div>
+          <div class="info"><h3>Mail:</h3>{{user.email}}</div>
           <div class="info"><h3>Téléphone:</h3>{{user.tel}}</div>
         </div>
       </div>
@@ -46,7 +46,7 @@
         <h2>Modifier {{pseudoSelected}} ?</h2>
         <div class="input">
             <label for="uid">Nouveau pseudo:</label>
-            <input type="text" name="uid" id="uid" v-model="userSelected.uid"/>
+            <input type="text" name="uid" id="uid" v-model="userSelected.username"/>
         </div>
         <a class="button" @click="displayConfirmChangeUid">Oui</a>
         <a class="button" @click="hideChangeUid">Non</a>
@@ -79,17 +79,17 @@
           <!-- nom -->
           <div class="input">
             <label for="nom">Nom:</label>
-            <input type="text" name="nom" id="nom" v-model="userSelected.surname"/>
+            <input type="text" name="nom" id="nom" v-model="userSelected.last_name"/>
           </div>
           <!-- prenom -->
           <div class="input">
             <label for="prenom">Prénom :</label>
-            <input type="text" name="prenom" id="prenom" v-model="userSelected.commonname"/>
+            <input type="text" name="prenom" id="prenom" v-model="userSelected.first_name"/>
           </div>
           <!-- mail -->
           <div class="input">
             <label for="mail">Mail :</label>
-            <input type="mail" name="pseudo" id="mail" v-model="userSelected.mail"/>
+            <input type="mail" name="pseudo" id="mail" v-model="userSelected.email"/>
           </div>
           <!-- tel -->
           <div class="input">
@@ -113,7 +113,6 @@
 
 <script>
 import UserMenu from '@/components/user/UserMenu'
-import UserDetailUniq from '@/components/user/UserDetailUniq'
 import Notif from '@/components/Notif'
 import axios from 'axios'
 export default {
@@ -140,7 +139,7 @@ export default {
     search: function (val) {
       var pseudosTmp = []
       for (var key in this.listUsers) {
-        if (this.listUsers[key].uid.indexOf(val) > -1 || this.listUsers[key].commonname.indexOf(val) > -1 || this.listUsers[key].surname.indexOf(val) > -1) {
+        if (this.listUsers[key].username.indexOf(val) > -1 || this.listUsers[key].first_name.indexOf(val) > -1 || this.listUsers[key].last_name.indexOf(val) > -1) {
           pseudosTmp.push(this.listUsers[key])
         }
       }
@@ -149,14 +148,14 @@ export default {
   },
   methods: {
     deleteUser () {
-      axios.delete(`${window.core_url}users/${this.userSelected.uid}/`).then((response) => {
-        delete this.listUsers[this.userSelected.uid]
-        console.log(this.userSelected.uid + ' delete')
+      axios.delete(`${window.core_url}users/${this.userSelected.username}/`).then((response) => {
+        delete this.listUsers[this.userSelected.username]
+        console.log(this.userSelected.username + ' delete')
         this.hideDeleteUser()
       })
       .catch((error) => {
         console.log(error)
-        this.addNotif(this.userSelected.uid + ' n\'a pas été supprimé', 'error')
+        this.addNotif(this.userSelected.username + ' n\'a pas été supprimé', 'error')
       })
     },
     validUser (user) {
@@ -166,14 +165,14 @@ export default {
       } else {
         finalObj = {'access': 'true'}
       }
-      axios.patch(`${window.core_url}groups/${user.uid}/`, finalObj)
+      axios.patch(`${window.core_url}groups/${user.username}/`, finalObj)
         .then((response) => {
-          this.addNotif('validation de ' + user.uid + ' :' + !user.isValid, 'success')
+          this.addNotif('validation de ' + user.username + ' :' + !user.isValid, 'success')
           user.isValid = !user.isValid
         })
         .catch((error) => {
           console.log(error)
-          this.addNotif('Erreur requete - validation de ' + user.uid, 'error')
+          this.addNotif('Erreur requete - validation de ' + user.username, 'error')
         })
     },
     displaySupprUser (user) {
@@ -212,7 +211,7 @@ export default {
 
       let finalObj = {}
       for (let key in this.userSelected) {
-        if (this.userSelected[key] !== this.listUsers[this.userSelected.uid][key]) {
+        if (this.userSelected[key] !== this.listUsers[this.userSelected.username][key]) {
           finalObj[key] = this.userSelected[key]
         }
       }
@@ -222,11 +221,11 @@ export default {
         return
       }
 
-      axios.patch(`${window.core_url}users/${this.userSelected.uid}/`, finalObj)
+      axios.patch(`${window.core_url}users/${this.userSelected.username}/`, finalObj)
         .then((response) => {
           this.hideChangeUser()
           delete finalObj['password']
-          Object.assign(this.listUsers[this.userSelected.uid], finalObj)
+          Object.assign(this.listUsers[this.userSelected.username], finalObj)
         })
         .catch((error) => {
           console.log(error)
@@ -256,16 +255,16 @@ export default {
     axios.get(window.core_url + 'users/', {})
     .then((response) => {
       response.data.forEach(function (element) {
-        this.listUsers[element.uid] = element
-        this.listUsers[element.uid].cotisant = 'non'
-        this.listUsers[element.uid].nombreSessions = '0'
-        // this.listUsers[element.uid].isValid = true
+        this.listUsers[element.username] = element
+        this.listUsers[element.username].cotisant = 'non'
+        this.listUsers[element.username].nombreSessions = '0'
+        // this.listUsers[element.username].isValid = true
         console.log(this)
         listPromise.push(
-          axios.get(window.core_url + 'groups/' + element.uid + '/', {})
+          axios.get(window.core_url + 'groups/' + element.username + '/', {})
             .then((response) => {
               console.log(response.data.has_access)
-              this.listUsers[element.uid].isValid = response.data.has_access
+              this.listUsers[element.username].isValid = response.data.has_access
               console.log(this)
             }
           )
@@ -292,7 +291,6 @@ export default {
   components:
   {
     'sub-menu-vertical': UserMenu,
-    'infos-user': UserDetailUniq,
     'notification': Notif
   }
 }

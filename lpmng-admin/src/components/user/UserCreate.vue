@@ -10,17 +10,17 @@
         <div class="partie">
           <div class="input">
             <label for="nom">Nom:</label>
-            <input type="text" name="nom" id="nom" v-model="form.surname"/>
+            <input type="text" name="nom" id="nom" v-model="form.last_name"/>
           </div>
           <div class="input">
             <label for="prenom">Prénom:</label>
-            <input type="text" name="prenom" id="prenom" v-model="form.commonname"/>
+            <input type="text" name="prenom" id="prenom" v-model="form.first_name"/>
           </div>
         </div>
         <div class="partie">
           <div class="input">
             <label for="pseudo">Pseudo:</label>
-            <input type="text" name="pseudo" id="pseudo" v-model="form.uid"/>
+            <input type="text" name="pseudo" id="pseudo" v-model="form.username"/>
           </div>
           <div class="input">
             <label for="password">Mot de passe:</label>
@@ -30,7 +30,7 @@
         <div class="partie">
           <div class="input">
             <label for="mail">Mail:</label>
-            <input type="mail" name="pseudo" id="mail" v-model="form.mail"/>
+            <input type="mail" name="pseudo" id="mail" v-model="form.email"/>
           </div>
           <div class="input">
             <label for="telephone">Téléphone:</label>
@@ -72,11 +72,11 @@ export default {
     return {
       form: {
         password: '',
-        surname: '',
-        commonname: '',
+        last_name: '',
+        first_name: '',
         cotisant: false,
-        uid: '',
-        mail: '',
+        username: '',
+        email: '',
         tel: ''
       },
       notifs: []
@@ -104,17 +104,17 @@ export default {
       // verify informations
       if (
       this.form.password.length > 2 &&
-      this.form.surname.length > 2 &&
-      this.form.commonname.length > 2 &&
-      this.form.uid.length > 2 &&
-      this.form.mail.length > 2) {
+      this.form.last_name.length > 2 &&
+      this.form.first_name.length > 2 &&
+      this.form.username.length > 2 &&
+      this.form.email.length > 2) {
         // do request
         axios.post(window.core_url + 'users/', this.prepareRequest(this.form))
         .then((response) => {
           this.msgReussite = 'réussi'
           this.msgError = ''
-          this.form.commonname = ''
-          this.form.surname = ''
+          this.form.first_name = ''
+          this.form.last_name = ''
           this.form.password = ''
         })
         .catch((error) => {
@@ -126,18 +126,18 @@ export default {
       }
     },
     generatePseudo () {
-      let pseudoTmp = this.form.surname + this.form.commonname
-      this.form.uid = pseudoTmp
+      let pseudoTmp = this.form.last_name + this.form.first_name
+      this.form.username = pseudoTmp
         .normalize('NFD')
         .replace(/[\u0300-\u036f]/g, '') // Remove accents
         .replace(/[^a-z]/gi, '') // Remove non alphabet character
         .substring(0, 10)
         .toLowerCase()
 
-      if (this.form.uid.length > 0) {
-        this.form.mail = this.form.uid + '@eisti.eu'
+      if (this.form.username.length > 0) {
+        this.form.email = this.form.username + '@eisti.eu'
       } else {
-        this.form.mail = ''
+        this.form.email = ''
       }
     },
     prepareRequest (obj) {
@@ -159,10 +159,10 @@ export default {
   },
   watch:
   {
-    'form.commonname': function () {
+    'form.first_name': function () {
       this.generatePseudo()
     },
-    'form.surname': function () {
+    'form.last_name': function () {
       this.generatePseudo()
     }
   }

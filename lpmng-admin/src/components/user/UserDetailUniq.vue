@@ -48,7 +48,7 @@
               <br/>
               <label for="mail" class="vertical">Mail:</label>
               <div class="inline">
-              <input type="mail" name="mail" id="mail" v-model="form.mail"/>
+              <input type="mail" name="mail" id="mail" v-model="form.email"/>
               <input type="button" value="Modifier" @click="changeMail"/>
               </div>
               <br/>
@@ -100,7 +100,7 @@ export default {
         prenom: this.prenom,
         cotisant: false,
         nombreSessions: this.nombreSessions,
-        mail: this.mail,
+        mail: this.email,
         tel: this.tel
       },
       msgReussite: '',
@@ -137,8 +137,8 @@ export default {
     },
     changeMail () {
       this.patchvalue({
-        mail: this.form.mail
-      }, this.form.mail, 'nom', this.mail, window.core_url + 'users/' + this.pseudo + '/')
+        mail: this.form.email
+      }, this.form.email, 'nom', this.email, window.core_url + 'users/' + this.pseudo + '/')
     },
     changeTel () {
       this.patchvalue({
@@ -174,7 +174,7 @@ export default {
       this.form.nombreSessions = val
     },
     'mail': function (val) {
-      this.form.mail = val
+      this.form.email = val
     },
     'tel': function (val) {
       this.form.tel = val

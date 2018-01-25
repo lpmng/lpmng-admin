@@ -114,7 +114,9 @@
 <script>
 import UserMenu from '@/components/user/UserMenu'
 import Notif from '@/components/Notif'
-import axios from 'axios'
+// import axios from 'axios'
+import UtilsAuth from '@/utils/UtilsAuth'
+
 export default {
   name: 'UserDetail',
   data () {
@@ -148,7 +150,7 @@ export default {
   },
   methods: {
     deleteUser () {
-      axios.delete(`${window.core_url}users/${this.userSelected.username}/`).then((response) => {
+      UtilsAuth.authRequest.delete(`${window.core_url}users/${this.userSelected.username}/`).then((response) => {
         delete this.listUsers[this.userSelected.username]
         console.log(this.userSelected.username + ' delete')
         this.hideDeleteUser()
@@ -165,7 +167,7 @@ export default {
       } else {
         finalObj = {'access': 'true'}
       }
-      axios.patch(`${window.core_url}groups/${user.username}/`, finalObj)
+      UtilsAuth.authRequest.patch(`${window.core_url}groups/${user.username}/`, finalObj)
         .then((response) => {
           this.addNotif('validation de ' + user.username + ' :' + !user.isValid, 'success')
           user.isValid = !user.isValid
@@ -221,7 +223,7 @@ export default {
         return
       }
 
-      axios.patch(`${window.core_url}users/${this.userSelected.username}/`, finalObj)
+      UtilsAuth.authRequest.patch(`${window.core_url}users/${this.userSelected.username}/`, finalObj)
         .then((response) => {
           this.hideChangeUser()
           delete finalObj['password']
@@ -250,43 +252,45 @@ export default {
     }
   },
   mounted: function () {
-    var listPromise = []
-    // lists all users when page load
-    axios.get(window.core_url + 'users/', {})
-    .then((response) => {
-      response.data.forEach(function (element) {
-        this.listUsers[element.username] = element
-        this.listUsers[element.username].cotisant = 'non'
-        this.listUsers[element.username].nombreSessions = '0'
-        // this.listUsers[element.username].isValid = true
-        console.log(this)
-        listPromise.push(
-          axios.get(window.core_url + 'groups/' + element.username + '/', {})
-            .then((response) => {
-              console.log(response.data.has_access)
-              this.listUsers[element.username].isValid = response.data.has_access
-              console.log(this)
-            }
+    if (UtilsAuth.auth(this.$router)) {
+      var listPromise = []
+      // lists all users when page load
+      UtilsAuth.authRequest.get(window.core_url + 'users/', {})
+      .then((response) => {
+        response.data.forEach(function (element) {
+          this.listUsers[element.username] = element
+          this.listUsers[element.username].cotisant = 'non'
+          this.listUsers[element.username].nombreSessions = '0'
+          // this.listUsers[element.username].isValid = true
+          console.log(this)
+          listPromise.push(
+            UtilsAuth.authRequest.get(window.core_url + 'groups/' + element.username + '/', {})
+              .then((response) => {
+                console.log(response.data.has_access)
+                this.listUsers[element.username].isValid = response.data.has_access
+                console.log(this)
+              }
+            )
           )
-        )
-      }, this)
+        }, this)
 
-      Promise.all(listPromise).then(
-        (responses) => {
-          this.pseudos = this.listUsers
-        }
-      )
+        Promise.all(listPromise).then(
+          (responses) => {
+            this.pseudos = this.listUsers
+          }
+        )
+        .catch((error) => {
+          console.log(error)
+          this.addNotif('Erreur requete - user valide', 'error')
+        })
+        this.loaderVisible = false
+      })
       .catch((error) => {
         console.log(error)
-        this.addNotif('Erreur requete - user valide', 'error')
+        this.loaderVisible = false
+        this.addNotif('Erreur de la requète - liste users', 'error')
       })
-      this.loaderVisible = false
-    })
-    .catch((error) => {
-      console.log(error)
-      this.loaderVisible = false
-      this.addNotif('Erreur de la requète - liste users', 'error')
-    })
+    }
   },
   components:
   {

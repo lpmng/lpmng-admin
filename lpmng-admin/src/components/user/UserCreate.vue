@@ -39,7 +39,7 @@
         </div>
         <div class="partie">
           <label style="position: relative;top: 12px;">Cotisant: </label>
-          <input type="checkbox" name="cotisant" value="false" id="cotisant" class="round-radio" v-model="form.cotisant">
+          <input type="checkbox" name="cotisant" value="false" id="cotisant" class="round-radio">
           <label title="If check the product will go in debt" for="cotisant">
             <div class="slider button-big">
               <div class="puce"></div>
@@ -65,7 +65,9 @@
 <script>
 import UserMenu from '@/components/user/UserMenu'
 import Notif from '@/components/Notif'
-import axios from 'axios'
+// import axios from 'axios'
+import UtilsAuth from '@/utils/UtilsAuth'
+
 export default {
   name: 'UserCreate',
   data () {
@@ -74,13 +76,15 @@ export default {
         password: '',
         last_name: '',
         first_name: '',
-        cotisant: false,
         username: '',
         email: '',
         tel: ''
       },
       notifs: []
     }
+  },
+  mounted () {
+    UtilsAuth.auth(this.$router)
   },
   methods: {
     addNotif (msg, type) {
@@ -109,7 +113,7 @@ export default {
       this.form.username.length > 2 &&
       this.form.email.length > 2) {
         // do request
-        axios.post(window.core_url + 'users/', this.prepareRequest(this.form))
+        UtilsAuth.authRequest.post(window.core_url + 'users/', this.prepareRequest(this.form))
         .then((response) => {
           this.msgReussite = 'réussi'
           this.msgError = ''

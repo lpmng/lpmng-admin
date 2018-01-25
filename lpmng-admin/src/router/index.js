@@ -41,6 +41,11 @@ export default new Router({
       path: '/index',
       name: 'Hello',
       component: Hello
+    },
+    {
+      path: '/',
+      name: 'Hello',
+      component: Hello
     }
   ]
 })

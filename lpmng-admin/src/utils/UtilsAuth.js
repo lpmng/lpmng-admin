@@ -6,7 +6,7 @@ UtilsAuth.token = ''
 UtilsAuth.authRequest = axios.create()
 // UtilsAuth.authRequest.defaults.headers.common['Authorization'] = UtilsAuth.token
 
-UtilsAuth.getToken = function (login, password) {
+UtilsAuth.getToken = function (login, password, router) {
   var client = 'CQ0lyCmDQi7ci86KDksCzAeI9E2Tej9SE0v0lggK'
   var key = 'L6drgefScn6MfQkJdDOceT8TKmdtVGCyyuzZIZZIiwmdc59umHKnDi55rbk02pFUuvkPHgmruwGKUmgS1VpGfATsJDiqM2Y0ig3DXrXDVF0yiDy6NsSk2WUoRvwgM10N'
   var key64 = btoa(client + ':' + key)
@@ -22,8 +22,9 @@ UtilsAuth.getToken = function (login, password) {
       if (oReq.status === OK) {
         var rep = JSON.parse(oReq.responseText)
         UtilsAuth.token = rep.access_token //
-        localStorage.setItem('token', UtilsAuth.token) // sauvegarde du token en session
+        sessionStorage.setItem('token', UtilsAuth.token) // sauvegarde du token en session
         console.log(UtilsAuth.token)
+        location.reload()
       } else {
         console.log('Error: ' + oReq.status) // An error occurred during the request.
       }
@@ -34,7 +35,7 @@ UtilsAuth.getToken = function (login, password) {
 }
 
 UtilsAuth.auth = function (router) {
-  UtilsAuth.token = localStorage.getItem('token')
+  UtilsAuth.token = sessionStorage.getItem('token')
   UtilsAuth.authRequest.defaults.headers.common['Authorization'] = 'bearer ' + UtilsAuth.token
   console.log(UtilsAuth.token)
   if (!UtilsAuth.token) {

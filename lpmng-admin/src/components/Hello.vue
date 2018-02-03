@@ -2,7 +2,7 @@
   <main >
     <section id="content">
       <h1><img src="/static/eclair.svg"/>LPMNG-Admin<img src="/static/eclair.svg"/></h1>
-      
+      <div class="notif-log" v-if="isLog">you are already login</div>
       <form>
          <div class="input">
             <label for="nom">Pseudo:</label>
@@ -29,12 +29,20 @@ export default {
     return {
       password: '',
       username: '',
-      notifs: []
+      notifs: [],
+      isLog: false
+    }
+  },
+  mounted () {
+    if (!sessionStorage.getItem('token')) {
+      this.isLog = false
+    } else {
+      this.isLog = true
     }
   },
   methods: {
     login () {
-      UtilsAuth.getToken(this.username, this.password)
+      UtilsAuth.getToken(this.username, this.password, this.$router)
     }
   }
 }
@@ -99,6 +107,19 @@ export default {
     margin-top: 3px;
   }
 
+  .notif-log
+  {
+    background-color: white;
+    max-width: 500px;
+    margin: auto;
+    font-size: 1.2em;
+    padding: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+    box-shadow: 0px 0px 8px rgba(0,0,0,0.2);
+    background-color: green;
+    color:white;
+  }
 
 
 </style>

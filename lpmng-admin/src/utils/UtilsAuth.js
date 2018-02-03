@@ -7,7 +7,9 @@ UtilsAuth.authRequest = axios.create()
 // UtilsAuth.authRequest.defaults.headers.common['Authorization'] = UtilsAuth.token
 
 UtilsAuth.getToken = function (login, password) {
-  var key64 = btoa('CQ0lyCmDQi7ci86KDksCzAeI9E2Tej9SE0v0lggK:L6drgefScn6MfQkJdDOceT8TKmdtVGCyyuzZIZZIiwmdc59umHKnDi55rbk02pFUuvkPHgmruwGKUmgS1VpGfATsJDiqM2Y0ig3DXrXDVF0yiDy6NsSk2WUoRvwgM10N')
+  var client = 'CQ0lyCmDQi7ci86KDksCzAeI9E2Tej9SE0v0lggK'
+  var key = 'L6drgefScn6MfQkJdDOceT8TKmdtVGCyyuzZIZZIiwmdc59umHKnDi55rbk02pFUuvkPHgmruwGKUmgS1VpGfATsJDiqM2Y0ig3DXrXDVF0yiDy6NsSk2WUoRvwgM10N'
+  var key64 = btoa(client + ':' + key)
   var oReq = new XMLHttpRequest()
   oReq.open('POST', window.core_url + 'o/token/', true)
   oReq.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
@@ -19,8 +21,8 @@ UtilsAuth.getToken = function (login, password) {
     if (oReq.readyState === DONE) {
       if (oReq.status === OK) {
         var rep = JSON.parse(oReq.responseText)
-        UtilsAuth.token = rep.access_token
-        localStorage.setItem('token', UtilsAuth.token)
+        UtilsAuth.token = rep.access_token //
+        localStorage.setItem('token', UtilsAuth.token) // sauvegarde du token en session
         console.log(UtilsAuth.token)
       } else {
         console.log('Error: ' + oReq.status) // An error occurred during the request.
@@ -28,7 +30,7 @@ UtilsAuth.getToken = function (login, password) {
     }
   }
 
-  oReq.send('grant_type=password&username=tjiho&password=azertyuiop&scope=read write&client_id=CQ0lyCmDQi7ci86KDksCzAeI9E2Tej9SE0v0lggK')
+  oReq.send('grant_type=password&username=' + login + '&password=' + password + '&scope=read write&client_id=' + client)
 }
 
 UtilsAuth.auth = function (router) {

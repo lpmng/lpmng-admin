@@ -39,7 +39,7 @@
         </div>
         <div class="partie">
           <label style="position: relative;top: 12px;">Cotisant: </label>
-          <input type="checkbox" name="cotisant" value="false" id="cotisant" class="round-radio">
+          <input type="checkbox" name="cotisant" value="false" id="cotisant" class="round-radio" v-model="form.cotisant">
           <label title="If check the product will go in debt" for="cotisant">
             <div class="slider button-big">
               <div class="puce"></div>
@@ -78,7 +78,8 @@ export default {
         first_name: '',
         username: '',
         email: '',
-        tel: ''
+        tel: '',
+        cotisant: false
       },
       notifs: []
     }

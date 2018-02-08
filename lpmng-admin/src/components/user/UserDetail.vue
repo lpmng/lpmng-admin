@@ -14,7 +14,7 @@
     <!-- results search (use radio input to permit the utilisation of v-bind properties)-->
       <div v-for="user in pseudos" class="searchResult">
         <input type="radio" name="search" class="search-result" v-bind:value="user.username" v-bind:id="'id-'+user.username" v-model="pseudoSelected">
-        <label v-bind:for="'id-'+user.username" v-bind:id="'id-Description-'+user.username" v-bind:class="{ isValid: user.isValid }">
+        <label v-bind:for="'id-'+user.username" v-bind:id="'id-Description-'+user.username" v-bind:class="{ isValid: user.nbSessions > 0 }">
 
             <div class="username">
               {{user.username}} 
@@ -30,8 +30,8 @@
         <div v-if="pseudoSelected == user.username" class="description">
           <div class="info"><h3>Nom:</h3>{{user.last_name}}</div>
           <div class="info"><h3>Prenom:</h3>{{user.first_name}}</div>
-          <div class="info"><h3>Cotisant:</h3>?</div>
-          <div class="info"><h3>Nombre session:</h3>?</div>
+          <div class="info"><h3>Cotisant:</h3>{{user.cotisant}}</div>
+          <div class="info"><h3>Nombre session:</h3>{{user.nombreSessions}}</div>
           <div class="info"><h3>Mail:</h3>{{user.email}}</div>
           <div class="info"><h3>Téléphone:</h3>{{user.tel}}</div>
         </div>
@@ -162,15 +162,18 @@ export default {
     },
     validUser (user) {
       var finalObj
-      if (user.isValid) {
-        finalObj = {'nbSession': 0}
+      var nbTemp = 0
+      if (user.nbSessions > 0) {
+        finalObj = {'nbSessions': 0}
+        nbTemp = 0
       } else {
-        finalObj = {'nbSession': 1}
+        finalObj = {'nbSessions': 1}
+        nbTemp = 1
       }
       UtilsAuth.authRequest.patch(`${window.core_url}users/${user.username}/`, finalObj)
         .then((response) => {
-          this.addNotif('validation de ' + user.username + ' :' + !user.isValid, 'success')
-          user.isValid = !user.isValid
+          user.nbSessions = nbTemp
+          this.addNotif('' + user.username + ' a maintenant ' + user.nbSessions + ' session', 'success')
         })
         .catch((error) => {
           console.log(error)
@@ -259,19 +262,9 @@ export default {
       .then((response) => {
         response.data.forEach(function (element) {
           this.listUsers[element.username] = element
-          this.listUsers[element.username].cotisant = 'non'
-          this.listUsers[element.username].nombreSessions = '0'
+          this.listUsers[element.username].cotisant = element.cotisant
+          this.listUsers[element.username].nombreSessions = element.nbSessions
           // this.listUsers[element.username].isValid = true
-          console.log(this)
-          listPromise.push(
-            UtilsAuth.authRequest.get(window.core_url + 'groups/' + element.username + '/', {})
-              .then((response) => {
-                console.log(response.data.has_access)
-                this.listUsers[element.username].isValid = response.data.has_access
-                console.log(this)
-              }
-            )
-          )
         }, this)
 
         Promise.all(listPromise).then(

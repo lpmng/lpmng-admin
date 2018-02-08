@@ -173,11 +173,12 @@ export default {
       UtilsAuth.authRequest.patch(`${window.core_url}users/${user.username}/`, finalObj)
         .then((response) => {
           user.nbSessions = nbTemp
+          this.listUsers[user.username].nombreSessions = nbTemp
           this.addNotif('' + user.username + ' a maintenant ' + user.nbSessions + ' session', 'success')
         })
         .catch((error) => {
           console.log(error)
-          this.addNotif('Erreur requete - validation de ' + user.username, 'error')
+          this.addNotif('Erreur requete - modification session de ' + user.username, 'error')
         })
     },
     displaySupprUser (user) {

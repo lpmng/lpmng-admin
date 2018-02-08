@@ -139,13 +139,34 @@ export default {
   {
     // search users
     search: function (val) {
-      var pseudosTmp = []
-      for (var key in this.listUsers) {
-        if (this.listUsers[key].username.indexOf(val) > -1 || this.listUsers[key].first_name.indexOf(val) > -1 || this.listUsers[key].last_name.indexOf(val) > -1) {
-          pseudosTmp.push(this.listUsers[key])
-        }
-      }
-      this.pseudos = pseudosTmp
+      var listPromise = []
+      this.listUsers = {}
+      this.pseudos = {}
+      UtilsAuth.authRequest.get(window.core_url + 'users/?q=' + val, {})
+      .then((response) => {
+        response.data.forEach(function (element) {
+          this.listUsers[element.username] = element
+          this.listUsers[element.username].cotisant = element.cotisant
+          this.listUsers[element.username].nombreSessions = element.nbSessions
+          // this.listUsers[element.username].isValid = true
+        }, this)
+
+        Promise.all(listPromise).then(
+          (responses) => {
+            this.pseudos = this.listUsers
+          }
+        )
+        .catch((error) => {
+          console.log(error)
+          this.addNotif('Erreur requete - user valide', 'error')
+        })
+        this.loaderVisible = false
+      })
+      .catch((error) => {
+        console.log(error)
+        this.loaderVisible = false
+        this.addNotif('Erreur de la requète - liste users', 'error')
+      })
     }
   },
   methods: {

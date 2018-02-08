@@ -163,11 +163,11 @@ export default {
     validUser (user) {
       var finalObj
       if (user.isValid) {
-        finalObj = {'access': ''}
+        finalObj = {'nbSession': 0}
       } else {
-        finalObj = {'access': 'true'}
+        finalObj = {'nbSession': 1}
       }
-      UtilsAuth.authRequest.patch(`${window.core_url}groups/${user.username}/`, finalObj)
+      UtilsAuth.authRequest.patch(`${window.core_url}users/${user.username}/`, finalObj)
         .then((response) => {
           this.addNotif('validation de ' + user.username + ' :' + !user.isValid, 'success')
           user.isValid = !user.isValid

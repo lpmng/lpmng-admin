@@ -139,7 +139,11 @@ export default {
   {
     // search users
     search: function (val) {
-      var listPromise = []
+      this.searchUser(val)
+    }
+  },
+  methods: {
+    searchUser (val) {
       this.listUsers = {}
       this.pseudos = {}
       UtilsAuth.authRequest.get(window.core_url + 'users/?q=' + val, {})
@@ -148,28 +152,16 @@ export default {
           this.listUsers[element.username] = element
           this.listUsers[element.username].cotisant = element.cotisant
           this.listUsers[element.username].nombreSessions = element.nbSessions
-          // this.listUsers[element.username].isValid = true
         }, this)
-
-        Promise.all(listPromise).then(
-          (responses) => {
-            this.pseudos = this.listUsers
-          }
-        )
-        .catch((error) => {
-          console.log(error)
-          this.addNotif('Erreur requete - user valide', 'error')
-        })
+        this.pseudos = this.listUsers
         this.loaderVisible = false
       })
       .catch((error) => {
         console.log(error)
         this.loaderVisible = false
-        this.addNotif('Erreur de la requète - liste users', 'error')
+        this.addNotif('Erreur de la requète - get list users', 'error')
       })
-    }
-  },
-  methods: {
+    },
     deleteUser () {
       UtilsAuth.authRequest.delete(`${window.core_url}users/${this.userSelected.username}/`).then((response) => {
         delete this.listUsers[this.userSelected.username]
@@ -277,34 +269,9 @@ export default {
     }
   },
   mounted: function () {
+    // if connected we load all users
     if (UtilsAuth.auth(this.$router)) {
-      var listPromise = []
-      // lists all users when page load
-      UtilsAuth.authRequest.get(window.core_url + 'users/', {})
-      .then((response) => {
-        response.data.forEach(function (element) {
-          this.listUsers[element.username] = element
-          this.listUsers[element.username].cotisant = element.cotisant
-          this.listUsers[element.username].nombreSessions = element.nbSessions
-          // this.listUsers[element.username].isValid = true
-        }, this)
-
-        Promise.all(listPromise).then(
-          (responses) => {
-            this.pseudos = this.listUsers
-          }
-        )
-        .catch((error) => {
-          console.log(error)
-          this.addNotif('Erreur requete - user valide', 'error')
-        })
-        this.loaderVisible = false
-      })
-      .catch((error) => {
-        console.log(error)
-        this.loaderVisible = false
-        this.addNotif('Erreur de la requète - liste users', 'error')
-      })
+      this.searchUser('')
     }
   },
   components:

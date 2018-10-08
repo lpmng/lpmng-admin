@@ -96,6 +96,11 @@
             <label for="telephone">Téléphone :</label>
             <input type="tel" name="telephone" id="telephone" v-model="userSelected.tel"/>
           </div>
+           <!-- session -->
+          <div class="input">
+            <label for="nbSessions">Sessions :</label>
+            <input type="number" name="nbSessions" id="nbSessions" v-model="userSelected.nbSessions"/>
+          </div>
 
           <div class="input">
             <label for="password">Mot de passe :</label>

@@ -422,7 +422,7 @@ input[type=radio].round-radio:checked + label .radio .in
 
 
 
-input[type=text],input[type=password],input[type=tel],input[type=mail]
+input[type=text],input[type=password],input[type=tel],input[type=mail],input[type=number]
 {
     height: 40px;
     width: 220px;

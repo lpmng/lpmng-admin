@@ -1,4 +1,4 @@
-# lpmng-admin
+# Lpmng-admin
 
 Front-end for Lpmng-core with Vue-JS.
 
@@ -9,10 +9,9 @@ Front-end for Lpmng-core with Vue-JS.
 cd lpmng-admin
 npm install
 ```
-
 then
 ```
-npm run build 
+npm run dev
 ```
 or 
 ```

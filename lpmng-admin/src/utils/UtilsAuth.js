@@ -6,9 +6,9 @@ UtilsAuth.token = ''
 UtilsAuth.authRequest = axios.create()
 // UtilsAuth.authRequest.defaults.headers.common['Authorization'] = UtilsAuth.token
 
-UtilsAuth.getToken = function (login, password, router) {
-  var client = 'CQ0lyCmDQi7ci86KDksCzAeI9E2Tej9SE0v0lggK'
-  var key = 'L6drgefScn6MfQkJdDOceT8TKmdtVGCyyuzZIZZIiwmdc59umHKnDi55rbk02pFUuvkPHgmruwGKUmgS1VpGfATsJDiqM2Y0ig3DXrXDVF0yiDy6NsSk2WUoRvwgM10N'
+UtilsAuth.getToken = function (login, password, router, done) {
+  var client = 'elbrdb9KDdTvJf0mlqjSu81LPrKQeq8aPBQftagI'
+  var key = 'oxzTgTiXp7MQEztmAIuNdqXVbP2sGYhYO12gY1y3Qd01YYlNQQpUTTYGqn2YUzjRDswArzIBPl6qeZjPKcI36kPur4Pw36fT187dRaewvEwrgpG4BDRQWv0OviaZ62WV'
   var key64 = btoa(client + ':' + key)
   var oReq = new XMLHttpRequest()
   oReq.open('POST', window.core_url + 'o/token/', true)
@@ -23,8 +23,7 @@ UtilsAuth.getToken = function (login, password, router) {
         var rep = JSON.parse(oReq.responseText)
         UtilsAuth.token = rep.access_token //
         sessionStorage.setItem('token', UtilsAuth.token) // sauvegarde du token en session
-        console.log(UtilsAuth.token)
-        location.reload()
+        done()
       } else {
         console.log('Error: ' + oReq.status) // An error occurred during the request.
       }

@@ -13,7 +13,7 @@
             <input type="password" placeholder="Mot de passe" v-model="password"/>
           </div>
           <div class="center">
-            <input type="submit" value="Se connecter" @click="login()"/>       
+            <input type="submit" value="Se connecter" @click="login()"/>
           </div>
       </form>
     </section>
@@ -42,7 +42,9 @@ export default {
   },
   methods: {
     login () {
-      UtilsAuth.getToken(this.username, this.password, this.$router)
+      UtilsAuth.getToken(this.username, this.password, this.$router, () => {
+        this.$router.replace({ name: 'UserIndex' })
+      })
     }
   }
 }

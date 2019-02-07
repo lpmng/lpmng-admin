@@ -2,7 +2,8 @@
   <main >
     <section id="content">
       <h1><img src="/static/eclair.svg"/>LPMNG-Admin<img src="/static/eclair.svg"/></h1>
-      <div class="notif-log" v-if="isLog">you are already login</div>
+      <div class="notif-log" v-if="isLog">Vous êtes connecté</div>
+      <div class="notif-error" v-if="error">erreur de connexion: code {{error}}</div>
       <form>
          <div class="input">
             <label for="nom">Pseudo:</label>
@@ -30,7 +31,8 @@ export default {
       password: '',
       username: '',
       notifs: [],
-      isLog: false
+      isLog: false,
+      error: ''
     }
   },
   mounted () {
@@ -44,6 +46,8 @@ export default {
     login () {
       UtilsAuth.getToken(this.username, this.password, this.$router, () => {
         this.$router.replace({ name: 'UserIndex' })
+      }, (error) => {
+        this.error = error
       })
     }
   }
@@ -109,9 +113,8 @@ export default {
     margin-top: 3px;
   }
 
-  .notif-log
+  .notif-log,.notif-error
   {
-    background-color: white;
     max-width: 500px;
     margin: auto;
     font-size: 1.2em;
@@ -119,8 +122,18 @@ export default {
     margin-bottom: 20px;
     text-align: center;
     box-shadow: 0px 0px 8px rgba(0,0,0,0.2);
-    background-color: green;
+
     color:white;
+  }
+
+  .notif-log
+  {
+      background-color: green;
+  }
+
+  .notif-error
+  {
+      background-color: #c53131;
   }
 
 

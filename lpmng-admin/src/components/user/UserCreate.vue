@@ -40,7 +40,7 @@
         <div class="partie">
           <label style="position: relative;top: 12px;">Cotisant: </label>
           <input type="checkbox" name="cotisant" value="false" id="cotisant" class="round-radio" v-model="form.cotisant">
-          <label title="If check the product will go in debt" for="cotisant">
+          <label for="cotisant">
             <div class="slider button-big">
               <div class="puce"></div>
             </div>
@@ -116,8 +116,7 @@ export default {
         // do request
         UtilsAuth.authRequest.post(window.core_url + 'users/', this.prepareRequest(this.form))
         .then((response) => {
-          this.msgReussite = 'réussi'
-          this.msgError = ''
+          this.addNotif('User ' + this.form.username + ' have been created', 'success')
           this.form.first_name = ''
           this.form.last_name = ''
           this.form.password = ''

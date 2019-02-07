@@ -244,12 +244,12 @@ small
 
 @keyframes show_notif
 {
-    from 
+    from
     {
         width: 0px;
         left: 400px;
     }
-    to 
+    to
     {
         width: 400px;
         left: 0px;
@@ -273,9 +273,21 @@ small
     position: relative;
 }
 
+.searchResult label.isCotisant
+{
+    background-color: #db40ad;
+}
+
 .searchResult label.isValid
 {
     background-color: rgb(3, 219, 3);
+}
+
+
+
+.searchResult label.isCotisant .name
+{
+    color: white;
 }
 
 .searchResult .isValid .name
@@ -338,7 +350,7 @@ input[type=radio].search-result + label:hover
 {
     border: 1px solid grey;
     border-radius: 5px;
-    padding: 9px 10px 0px 10px; 
+    padding: 9px 10px 0px 10px;
 
 }
 
@@ -346,8 +358,8 @@ input[type=radio].search-result:checked + label
 {
     border: 1px solid chocolate;
     border-radius: 5px;
-    padding: 9px 10px 0px 10px;    
-} 
+    padding: 9px 10px 0px 10px;
+}
 
 /*********************************/
 /*      Form                    */

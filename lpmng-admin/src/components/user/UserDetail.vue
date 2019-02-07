@@ -14,10 +14,10 @@
     <!-- results search (use radio input to permit the utilisation of v-bind properties)-->
       <div v-for="user in pseudos" class="searchResult">
         <input type="radio" name="search" class="search-result" v-bind:value="user.username" v-bind:id="'id-'+user.username" v-model="pseudoSelected">
-        <label v-bind:for="'id-'+user.username" v-bind:id="'id-Description-'+user.username" v-bind:class="{ isValid: user.nbSessions > 0 }">
+        <label v-bind:for="'id-'+user.username" v-bind:id="'id-Description-'+user.username" v-bind:class="{ isValid: user.nbSessions > 0, isCotisant: user.cotisant }">
 
             <div class="username">
-              {{user.username}} 
+              {{user.username}}
               <img src="../../../src/assets/IcoMoon/SVG/114-user.svg" class="button" @click="displayChangeUid(user)" />
             </div>
             <div class="name">{{user.first_name}} {{user.last_name}}</div>
@@ -36,7 +36,7 @@
           <div class="info"><h3>Téléphone:</h3>{{user.tel}}</div>
         </div>
       </div>
-      
+
     </section>
 
     <!-- .'.'.'.'. Modals .'.'.'.'. -->

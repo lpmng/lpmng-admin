@@ -465,6 +465,13 @@ input[type=button], input[type=submit], a.button
     font-size: 1.3em;
 }
 
+input[type=button]:hover, input[type=submit]:hover, a.button:hover
+{
+    opacity: 0.85;
+    cursor: pointer;
+}
+
+
 a.button
 {
     display: inline-flex;
